@@ -1,0 +1,413 @@
+/* ==========================================================================
+   1. ПОДКЛЮЧЕНИЕ ШРИФТА CHAKRA PETCH
+   ========================================================================== */
+
+/* Light (300) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('Fonts/Chakra_Petch/ChakraPetch-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* ==========================================================================
+   2. ПОДКЛЮЧЕНИЕ ШРИФТА GEIST MONO
+   ========================================================================== */
+
+/* Thin (100) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraLight (200) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light (300) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraBold (800) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Black (900) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('Fonts/Geist_Mono/GeistMono-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+html, body {
+  margin: 0;
+  height: 500vh;
+  }
+
+html {
+  background: black;
+  /* Убирает резкий "отскок" (эффект резины) на смартфонах и трекпадах Mac */
+  overscroll-behavior-y: none; 
+}
+
+video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  object-fit: cover;
+
+  /* ❗ ключ: убираем любые анимации */
+  transition: none !important;
+  transform: translateZ(0); /* фикс GPU слой */
+  backface-visibility: hidden;
+  }
+
+#video1 {
+  z-index: -2;
+  opacity: 1;
+}
+
+#video2 {
+  z-index: -1;
+  opacity: 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(5px); /* Для  Safari*/
+  backdrop-filter: blur(5px); /* Для остальных */
+  border-bottom: 1px solid rgba(50, 50, 50);
+  z-index: 999;
+}
+
+.navbar-menu {
+  display: flex;
+  text-align: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.navbar-menu a {
+  font-family: 'Geist Mono', monospace;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+
+.main-title {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 52px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 0px auto auto; 
+  padding-top: 285px;
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 🌟 Красим только слово TEAM в красный цвет */
+.main-title .red-text {
+  color: #ff0000; /* Яркий красный цвет (при необходимости замените на точный HEX из Фотошопа) */
+}
+
+.sub-title {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 22px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 0px auto auto; 
+  padding-top: 25px;
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.large-box {
+  /* 🌟 Задаем точные размеры */
+  width: 1920px;
+  height: 1080px;
+  max-width: 100%; /* Защита: прямоугольник не выйдет за правый край экрана */
+  
+  /* 🌟 Серая обводка толщиной 1 пиксель (можно сделать толще, например 2px) */
+  border: 1px solid rgba(150, 150, 150, 0.5); 
+  
+  /* 🌟 Пустая (прозрачная) заливка */
+  background: transparent; 
+  
+  /* Центрируем блок на странице и добавляем отступы сверху/снизу */
+  margin: 50px auto; 
+  
+  /* Включаем правильный расчет размеров, чтобы обводка не увеличивала блок */
+  box-sizing: border-box; 
+}
+
+.box {
+  /* 🌟 Задаем точные размеры */
+  width: 1340px;
+  height: 400px;
+  max-width: 100%; /* Защита: прямоугольник не выйдет за правый край экрана */
+  
+  /* 🌟 Серая обводка толщиной 1 пиксель (можно сделать толще, например 2px) */
+  border: 2px solid rgba(26, 26, 26); 
+  
+  /* 🌟 Пустая (прозрачная) заливка */
+  background: transparent; 
+  
+  /* Центрируем блок на странице и добавляем отступы сверху/снизу */
+  margin: 280px auto; 
+  
+  /* Включаем правильный расчет размеров, чтобы обводка не увеличивала блок */
+  box-sizing: border-box; 
+}
+
+.box img {
+  width: 100%;
+  height: 100%;
+  /* Картинка заполнит весь прямоугольник и не сожмется, лишнее аккуратно обрежется */
+  object-fit: cover; 
+  /* Центрирует изображение внутри рамки */
+  object-position: center; 
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-image: url('Pc design.jpg');
+  background-size: cover;  
+  background-position: center top;
+  z-index: 0;
+}
+
+html {
+  /* 🌟 Включает плавную анимацию прокрутки */
+  
+  
+  /* Убирает резкий "отскок" (эффект резины) на смартфонах и трекпадах Mac */
+  overscroll-behavior-y: none; 
+}
