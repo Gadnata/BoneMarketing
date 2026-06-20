@@ -234,14 +234,11 @@
 html, body {
   margin: 0;
   height: 500vh;
-  -ms-overflow-style: none;  /* Скрывает скроллбар в старых браузерах Internet Explorer и Edge */
-  scrollbar-width: none;     /* Скрывает скроллбар во всех современных версиях Firefox */
   }
 
 html {
   background: black;
   /* Убирает резкий "отскок" (эффект резины) на смартфонах и трекпадах Mac */
-  overscroll-behavior-y: none;
   overflow-y: scroll;
 }
 
