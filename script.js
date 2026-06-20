@@ -18,48 +18,60 @@ window.addEventListener('beforeunload', () => {
 document.body.classList.add('scroll-locked');
 vid.pause();
 
-// 🌟 НАСТРОЙКИ ДЛЯ СУПЕР-ДЛИННОЙ И ПЛАВНОЙ АНИМАЦИИ
+// 🌟 НАСТРОЙКИ ДЛЯ СУПЕР-ДЛИННОЙ И ПЛАВНОЙ АНИМАЦИИ САЙТА
 let scrollY = 0;       
 let scrollVelocity = 0; 
-const friction = 0.94;   // Увеличили до 0.94 — теперь анимация стала ОЧЕНЬ долгой и тягучей
-const stepMultiplier = 0.08; // Снизили силу отклика для максимальной мягкости
+const friction = 0.94;       // Тягучесть скролла
+const stepMultiplier = 0.08; // Мягкость отклика на колесо
 
-// Перехватываем прокрутку колесиком мыши
+// 🌟 НАСТРОЙКИ ДЛЯ БОРЬБЫ С ЛАГАМИ ВИДЕО В CHROME
+let isSeeking = false;     // Блокировщик спама кадров
+const minTimeStep = 0.002; // Ваш проверенный рабочий шаг времени
+
+// Как только Chrome успешно отрендерил кадр — разрешаем следующий шаг
+vid.addEventListener('seeked', () => {
+  isSeeking = false; 
+});
+
+// ЕДИНЫЙ ОБРАБОТЧИК КОЛЕСА (Заменяет все старые варианты)
 window.addEventListener('wheel', (e) => {
-  if (!isReadyForScroll) {
-    e.preventDefault();
-    return;
-  }
+  e.preventDefault(); // Полностью отключаем дефолтный резкий скролл браузера
   
-  e.preventDefault();
+  if (!isReadyForScroll) return;
+  
+  // Добавляем импульс скорости от кручения мыши
   scrollVelocity += e.deltaY * stepMultiplier;
 }, { passive: false });
 
+// Защита от прокрутки кнопками и тачпадом в первые 1.5 секунды
+const preventTouchAndKeys = (e) => {
+  if (!isReadyForScroll) e.preventDefault();
+};
+window.addEventListener('touchmove', preventTouchAndKeys, { passive: false });
+window.addEventListener('keydown', (e) => {
+  const keys = ['Space', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'End', 'Home'];
+  if (!isReadyForScroll && keys.includes(e.code)) e.preventDefault();
+});
 
-// ЕДИНЫЙ ЦИКЛ АНИМАЦИИ
+
+// ЕДИНЫЙ ЦИКЛ АНИМАЦИИ (Двигает сайт + плавно рендерит видео)
 const renderLoop = () => {
   if (isReadyForScroll) {
     const absVelocity = Math.abs(scrollVelocity);
 
-    // 🌟 ИДЕАЛЬНАЯ ФИНАЛЬНАЯ ДОВОДКА:
+    // ИДЕАЛЬНАЯ ФИНАЛЬНАЯ ДОВОДКА СТРАНИЦЫ
     if (absVelocity < 0.15) {
-      // Когда скорость падает до неощутимого минимума, жестко обнуляем её.
-      // Это убирает микро-рывки и застревание видео на долях пикселя.
       scrollVelocity = 0;
     } else if (absVelocity < 1.5) {
-      // Когда мы в самой фазе финиша (скорость меньше 1.5px за кадр),
-      // мы искусственно увеличиваем сопротивление (душим трение до 0.75).
-      // Страница мягко, но быстро делает финишный "прикол" и встает намертво.
-      scrollVelocity *= 0.75;
+      scrollVelocity *= 0.75; // Мягкий тормоз в самом конце
     } else {
-      // Основной режим долгого и плавного полета страницы
-      scrollVelocity *= friction;
+      scrollVelocity *= friction; // Стандартное трение в полете
     }
 
-    // Изменяем координату скролла
+    // Изменяем координату плавного скролла
     scrollY += scrollVelocity;
 
-    // Жестко ограничиваем края сайта
+    // Жестко ограничиваем края сайта, чтобы не улетать за пределы страницы
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     if (scrollY < 0) {
       scrollY = 0;
@@ -69,38 +81,50 @@ const renderLoop = () => {
       scrollVelocity = 0;
     }
 
-    // Физически скроллим страницу только если есть движение
+    // Физически двигаем страницу в текущую плавную координату
     if (scrollVelocity !== 0) {
       window.scrollTo(0, scrollY);
     }
 
-    // Твой алгоритм для видео
-    if (vid.duration > 0) {
+    // 🌟 ПОДРУЖЕННЫЙ АЛГОРИТМ ВИДЕО (Работает внутри цикла физики)
+    // Обновляем кадр только если Chrome не занят (not isSeeking)
+    if (vid.duration > 0 && !isSeeking) {
+      // Считаем прогресс на основе текущего положения страницы window.scrollY
       const distance = window.scrollY - section.offsetTop;
       const total = section.clientHeight - window.innerHeight;
 
       let percentage = distance / total;
       percentage = Math.max(0, Math.min(percentage, 1));
+
+      const calculatedTargetTime = vid.duration * percentage;
       
-      vid.currentTime = vid.duration * percentage;
+      // Считаем разницу во времени между текущим кадром и тем, куда приплыл плавный скролл
+      const timeDifference = Math.abs(calculatedTargetTime - vid.currentTime);
+
+      // Если скролл сдвинулся дальше вашего порога 0.001 — запрашиваем новый кадр
+      if (timeDifference > minTimeStep) {
+        isSeeking = true; // Запираем светофор, пока Chrome думает
+        vid.currentTime = calculatedTargetTime;
+      }
     }
   }
   
   requestAnimationFrame(renderLoop);
 };
 
-// Запуск первого видео
+// Запуск первого видео (автоплей)
 vid1.play().catch(() => {
   window.addEventListener('click', () => {
     if (document.body.classList.contains('scroll-locked')) vid1.play();
   }, { once: true });
 });
 
-// Таймер окончания первого видео
+// Таймер окончания первого видео и старт главного движка сайта
 setTimeout(() => {
   isReadyForScroll = true;
   document.body.classList.remove('scroll-locked');
 
+  // Плавное переключение прозрачности между видео
   vid1.style.transition = 'opacity 0.4s ease';
   vid.style.transition = 'opacity 0.4s ease';
   vid1.style.opacity = '0';
@@ -109,8 +133,10 @@ setTimeout(() => {
   vid1.pause();
   vid.currentTime = 0;
   
+  // Привязываем стартовую координату физики к верху страницы
   scrollY = window.scrollY;
   scrollVelocity = 0;
   
+  // Запускаем бесконечный рендер-цикл
   requestAnimationFrame(renderLoop);
 }, 1583);
