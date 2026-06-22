@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. ПОДКЛЮЧЕНИЕ ШРИФТА CHAKRA PETCH
+   ПОДКЛЮЧЕНИЕ ШРИФТА CHAKRA PETCH
    ========================================================================== */
 
 /* Light (300) */
@@ -82,9 +82,8 @@
   font-display: swap;
 }
 
-
 /* ==========================================================================
-   2. ПОДКЛЮЧЕНИЕ ШРИФТА GEIST MONO
+   ПОДКЛЮЧЕНИЕ ШРИФТА GEIST MONO
    ========================================================================== */
 
 /* Thin (100) */
@@ -231,9 +230,13 @@
   font-display: swap;
 }
 
+/* ==========================================================================
+   Основные теги сайта
+   ========================================================================== */
+
 html, body {
   margin: 0;
-  height: 500vh;
+  height: 1100vh;
   }
 
 html {
@@ -242,8 +245,40 @@ html {
   overflow-y: scroll;
 }
 
+body::before {
+  content: "";
+  background-image: url("PC Design example.jpg"); 
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  /* 🌟 Растягиваем на 100% ширины текущего экрана */
+  width: 100%; 
+  height: 100%; 
+  
+  /* 🌟 Инструкция для картинки: сжиматься/растягиваться ровно по ширине контейнера */
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: top center;
+  
+  opacity: 0; 
+  z-index: 999999; 
+  pointer-events: none; 
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0; /* Убираем стандартные отступы браузера, чтобы макет встал впритык */
+}
+
+/* ==========================================================================
+   Скролл видео
+   ========================================================================== */
+
 .vid {
-  height: 3000px;
+  
 }
 
 .holder {
@@ -258,19 +293,25 @@ html {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 108%;
   object-fit: cover;
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
 }
 
 #video1 {
   z-index: -2;
-  opacity: 1;
+  opacity: 0.8;
 }
 
 #video2 {
   z-index: -1;
-  opacity: 1;
+  opacity: 0;
 }
+
+/* ==========================================================================
+   Навбар
+   ========================================================================== */
 
 .navbar {
   width: 100%;
@@ -343,7 +384,11 @@ html {
   cursor: pointer;
 }
 
-.main-title {
+/* ==========================================================================
+   Остальная часть главной страницы
+   ========================================================================== */
+
+.main-title-1 {
   /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
   font-family: 'Chakra Petch', sans-serif;
   letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
@@ -359,34 +404,30 @@ html {
   
   /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
   margin: 0px auto auto; 
-  padding-top: 285px;
-  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  padding-top: 290px;
   
   /* Сглаживание пикселей для идеальной четкости */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  z-index: 9;
 }
 
 /* 🌟 Красим только слово TEAM в красный цвет */
-.main-title .red-text {
+.red-text {
   color: #ff0000; /* Яркий красный цвет (при необходимости замените на точный HEX из Фотошопа) */
 }
 
-.sub-title {
+.sub-title-1 {
   /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
   font-family: "Geist-Mono", monospace;
   letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
   line-height: 1.5;
   
   /* 🌟 Задаем точные параметры из вашей задачи */
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
   text-align: center; /* Выравнивание строго по центру экрана */
   
   color: rgba(204, 204, 204); /* Основной цвет заголовка */
-  text-transform: uppercase; /* Делает все буквы заглавными */
-  
   /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
   margin: 0px auto auto; 
   padding-top: 25px;
@@ -397,29 +438,57 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.large-box {
-  /* 🌟 Задаем точные размеры */
-  width: 1920px;
-  height: 1080px;
-  max-width: 100%; /* Защита: прямоугольник не выйдет за правый край экрана */
+.buttons-2-main {
+  margin: 35px auto auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button {
+  width: 190px;
+  height: 45px; 
+  box-sizing: border-box;
+  background-color: rgba(13, 13, 13);
+  border: 1px solid rgba(77, 77, 77); 
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px;
+  cursor: pointer;
+  padding: 0; /* 🌟 Обнуляем дефолтные отступы кнопок */
+
+  display: flex;
+  align-items: center;    
+  justify-content: center; 
+  gap: 8px;               
+  line-height: 1;         
+  white-space: nowrap; /* 🌟 Запрещаем тексту переноситься, удерживая баланс */
   
-  /* 🌟 Серая обводка толщиной 1 пиксель (можно сделать толще, например 2px) */
-  border: 1px solid rgba(150, 150, 150, 0.5); 
+  font-size: 14px;
+  font-weight: 500; 
+  text-align: center; 
   
-  /* 🌟 Пустая (прозрачная) заливка */
-  background: transparent; 
+  color: rgba(204, 204, 204); 
+  text-transform: uppercase; 
   
-  /* Центрируем блок на странице и добавляем отступы сверху/снизу */
-  margin: 50px auto; 
-  
-  /* Включаем правильный расчет размеров, чтобы обводка не увеличивала блок */
-  box-sizing: border-box; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.button img {
+  width: 20px; /* 🌟 Подсказка: для высоты кнопки 45px, иконка 20px-24px выглядит аккуратнее */
+  height: auto; 
+  display: block; 
+  flex-shrink: 0; /* 🌟 Запрещает картинке сжиматься */
+}
+
+.button-whatsapp {
+  border: 1px solid rgba(50, 217, 81); 
 }
 
 .box {
   /* 🌟 Задаем точные размеры */
-  width: 1340px;
-  height: 400px;
+  width: 1360px;
+  height: 460px;
   max-width: 100%; /* Защита: прямоугольник не выйдет за правый край экрана */
   
   /* 🌟 Серая обводка толщиной 1 пиксель (можно сделать толще, например 2px) */
@@ -429,7 +498,7 @@ html {
   background: transparent; 
   
   /* Центрируем блок на странице и добавляем отступы сверху/снизу */
-  margin: 280px auto; 
+  margin: 210px auto; 
   
   /* Включаем правильный расчет размеров, чтобы обводка не увеличивала блок */
   box-sizing: border-box; 
@@ -444,3 +513,261 @@ html {
   object-position: center; 
 }
 
+.outline {
+  /* 🌟 ОДНО ЗНАЧЕНИЕ ДЛЯ НАСТРОЙКИ УГОЛКОВ (меняйте только его) */
+  --corner-size: 8px; 
+
+  margin: 500px auto 10px;
+  width: 155px;
+  height: 25px; 
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50); 
+
+  /* 🌟 Автоматический расчет маски через переменную */
+  clip-path: polygon(
+    0% 0%, 
+    var(--corner-size) 0%, 
+    var(--corner-size) 2px, 
+    calc(100% - var(--corner-size)) 2px, 
+    calc(100% - var(--corner-size)) 0%, 
+    100% 0%, 
+    
+    100% var(--corner-size), 
+    calc(100% - 2px) var(--corner-size), 
+    calc(100% - 2px) calc(100% - var(--corner-size)), 
+    100% calc(100% - var(--corner-size)), 
+    100% 100%, 
+    
+    calc(100% - var(--corner-size)) 100%, 
+    calc(100% - var(--corner-size)) calc(100% - 2px), 
+    var(--corner-size) calc(100% - 2px), 
+    var(--corner-size) 100%, 
+    0% 100%, 
+    
+    0% calc(100% - var(--corner-size)), 
+    2px calc(100% - var(--corner-size)), 
+    2px var(--corner-size), 
+    0% var(--corner-size)
+  );
+
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+}
+
+.outline p {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.3;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 15px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(102, 102, 102); /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-title-2 {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.3;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 32px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cards {
+  margin: 60px auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;  /* Элементы идут сверху вниз */
+  align-items: center;
+  width: 275px;
+  border: 2px solid rgba(38, 38, 38); 
+  background: rgba(10, 10, 10); 
+  box-sizing: border-box;
+  box-shadow: 4px 4px 0px rgb(38, 38, 38);
+}
+
+.card-type-1 {
+  height: 380px;
+}
+
+.card-type-2 {
+  height: 360px;
+}
+
+.card h1 {
+  margin: 24px;
+  text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 54px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card p {
+  margin-top: auto; 
+  /* 🌟 ТОЧНЫЙ ОТСТУП ОТ НИЗА: ровно 10px до границы */
+  margin-bottom: 5px; 
+  text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 0.8;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 24px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(77, 77, 77); /* Основной цвет заголовка */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-trusted {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 225px auto auto; 
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lunar-media-1 {
+  width: 160px;
+  margin: 55px auto; 
+  display: flex;
+  justify-content: center;
+}
+
+.main-title-3 {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.2px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 46px;
+  font-weight: 600; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 300px auto auto; 
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sub-title-2 {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 15px auto auto; 
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-title-4 {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.2px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 46px;
+  font-weight: 600; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 780px auto auto; 
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sub-title-3 {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 15px auto auto; 
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

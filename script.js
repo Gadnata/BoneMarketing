@@ -2,141 +2,139 @@ const section = document.querySelector('section.vid');
 const vid = section.querySelector('#video2');
 const vid1 = section.querySelector('#video1');
 
+// Флаг готовности к работе плавного скролла
 let isReadyForScroll = false;
 
-// 1. ВСЕГДА ПЕРЕКИДЫВАЕМ НА САМЫЙ ВЕРХ ПРИ ОБНОВЛЕНИИ СТРАНИЦЫ
-if (history.scrollRestoration) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-
-window.addEventListener('beforeunload', () => {
-  window.scrollTo(0, 0);
-});
-
-// Блокировка скролла в начале (через класс)
-document.body.classList.add('scroll-locked');
-vid.pause();
-
-// 🌟 НАСТРОЙКИ ДЛЯ СУПЕР-ДЛИННОЙ И ПЛАВНОЙ АНИМАЦИИ САЙТА
+// НАСТРОЙКИ ДЛЯ СУПЕР-ДЛИННОЙ И ПЛАВНОЙ АНИМАЦИИ САЙТА
 let scrollY = 0;       
 let scrollVelocity = 0; 
 const friction = 0.94;       // Тягучесть скролла
 const stepMultiplier = 0.08; // Мягкость отклика на колесо
 
-// 🌟 НАСТРОЙКИ ДЛЯ БОРЬБЫ С ЛАГАМИ ВИДЕО В CHROME
-let isSeeking = false;     // Блокировщик спама кадров
-const minTimeStep = 0.002; // Ваш проверенный рабочий шаг времени
+// НАСТРОЙКИ ДЛЯ БОРЬБЫ С ЛАГАМИ ВТОРОГО ВИДЕО В CHROME
+let isSeeking = false;     
+const minTimeStep = 0.002; 
 
-// Как только Chrome успешно отрендерил кадр — разрешаем следующий шаг
 vid.addEventListener('seeked', () => {
   isSeeking = false; 
 });
 
-// ЕДИНЫЙ ОБРАБОТЧИК КОЛЕСА (Заменяет все старые варианты)
-window.addEventListener('wheel', (e) => {
-  e.preventDefault(); // Полностью отключаем дефолтный резкий скролл браузера
-  
-  if (!isReadyForScroll) return;
-  
-  // Добавляем импульс скорости от кручения мыши
-  scrollVelocity += e.deltaY * stepMultiplier;
-}, { passive: false });
+// 1. СБРОС СКРОЛЛА ПРИ ЗАГРУЗКЕ
+if (history.scrollRestoration) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
 
-// Защита от прокрутки кнопками и тачпадом в первые 1.5 секунды
-const preventTouchAndKeys = (e) => {
-  if (!isReadyForScroll) e.preventDefault();
+// 2. БЛОКИРОВКА КЛАССОМ CSS
+document.body.classList.add('scroll-locked');
+vid.pause();
+
+// 🌟 ФУНКЦИЯ ВКЛЮЧЕНИЯ ДВИЖКА (Запускается строго по таймеру)
+const activateSmoothScrollEngine = () => {
+  isReadyForScroll = true;
+  document.body.classList.remove('scroll-locked');
+
+  // Плавная подмена слоев
+  vid1.style.opacity = '0';
+  vid.style.opacity = '0.8';
+
+  vid1.pause();
+  vid.currentTime = 0;
+
+  // Инициализируем стартовые координаты физики
+  scrollY = window.scrollY;
+  scrollVelocity = 0;
+
+  // Навешиваем слушатель колеса ТОЛЬКО СЕЙЧАС, чтобы не злить браузер при старте
+  window.addEventListener('wheel', handleWheelInput, { passive: false });
+  
+  // Запускаем бесконечный цикл анимации
+  requestAnimationFrame(renderLoop);
 };
-window.addEventListener('touchmove', preventTouchAndKeys, { passive: false });
-window.addEventListener('keydown', (e) => {
-  const keys = ['Space', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'End', 'Home'];
-  if (!isReadyForScroll && keys.includes(e.code)) e.preventDefault();
-});
 
+// Функция обработки колеса мыши (работает только ПОСЛЕ таймера)
+function handleWheelInput(e) {
+  e.preventDefault(); 
+  scrollVelocity += e.deltaY * stepMultiplier;
+}
 
-// ЕДИНЫЙ ЦИКЛ АНИМАЦИИ (Двигает сайт + плавно рендерит видео)
-const renderLoop = () => {
-  if (isReadyForScroll) {
-    const absVelocity = Math.abs(scrollVelocity);
-
-    // ИДЕАЛЬНАЯ ФИНАЛЬНАЯ ДОВОДКА СТРАНИЦЫ
-    if (absVelocity < 0.15) {
-      scrollVelocity = 0;
-    } else if (absVelocity < 1.5) {
-      scrollVelocity *= 0.75; // Мягкий тормоз в самом конце
-    } else {
-      scrollVelocity *= friction; // Стандартное трение в полете
-    }
-
-    // Изменяем координату плавного скролла
-    scrollY += scrollVelocity;
-
-    // Жестко ограничиваем края сайта, чтобы не улетать за пределы страницы
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollY < 0) {
-      scrollY = 0;
-      scrollVelocity = 0;
-    } else if (scrollY > maxScroll) {
-      scrollY = maxScroll;
-      scrollVelocity = 0;
-    }
-
-    // Физически двигаем страницу в текущую плавную координату
-    if (scrollVelocity !== 0) {
-      window.scrollTo(0, scrollY);
-    }
-
-    // 🌟 ПОДРУЖЕННЫЙ АЛГОРИТМ ВИДЕО (Работает внутри цикла физики)
-    // Обновляем кадр только если Chrome не занят (not isSeeking)
-    if (vid.duration > 0 && !isSeeking) {
-      // Считаем прогресс на основе текущего положения страницы window.scrollY
-      const distance = window.scrollY - section.offsetTop;
-      const total = section.clientHeight - window.innerHeight;
-
-      let percentage = distance / total;
-      percentage = Math.max(0, Math.min(percentage, 1));
-
-      const calculatedTargetTime = vid.duration * percentage;
+// 🌟 БЕЗОПАСНЫЙ ЗАПУСК ПЕРВОГО ВИДЕО (Прямой вызов без посредников)
+const triggerFirstVideo = () => {
+  // Убеждаемся, что видео имеет атрибут muted, иначе автоплей запрещен законом браузеров
+  vid1.muted = true; 
+  
+  vid1.play()
+    .then(() => {
+      // ТАЙМЕР ЗАПУСКАЕТСЯ СТРОГО ПОСЛЕ ТОГО, КАК ВИДЕО КОРРЕКТНО ПОЕХАЛО
+      setTimeout(activateSmoothScrollEngine, 1583);
       
-      // Считаем разницу во времени между текущим кадром и тем, куда приплыл плавный скролл
-      const timeDifference = Math.abs(calculatedTargetTime - vid.currentTime);
+      // Удаляем стартовые слушатели
+      window.removeEventListener('click', triggerFirstVideo);
+      window.removeEventListener('wheel', triggerFirstVideo);
+    })
+    .catch((err) => {
+      console.log("Браузер ждет физического клика по экрану от пользователя...");
+    });
+};
 
-      // Если скролл сдвинулся дальше вашего порога 0.001 — запрашиваем новый кадр
-      if (timeDifference > minTimeStep) {
-        isSeeking = true; // Запираем светофор, пока Chrome думает
-        vid.currentTime = calculatedTargetTime;
-      }
+// Слушатели «первого жеста» на случай жесткой блокировки Chrome
+window.addEventListener('click', triggerFirstVideo, { once: true });
+window.addEventListener('wheel', triggerFirstVideo, { once: true });
+
+
+// ЕДИНЫЙ ЦИКЛ АНИМАЦИИ (Включается только после завершения video1)
+const renderLoop = () => {
+  if (!isReadyForScroll) return;
+
+  const absVelocity = Math.abs(scrollVelocity);
+
+  // ИДЕАЛЬНАЯ ФИНАЛЬНАЯ ДОВОДКА СТРАНИЦЫ
+  if (absVelocity < 0.15) {
+    scrollVelocity = 0;
+  } else if (absVelocity < 1.5) {
+    scrollVelocity *= 0.75; 
+  } else {
+    scrollVelocity *= friction; 
+  }
+
+  scrollY += scrollVelocity;
+
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  if (scrollY < 0) {
+    scrollY = 0;
+    scrollVelocity = 0;
+  } else if (scrollY > maxScroll) {
+    scrollY = maxScroll;
+    scrollVelocity = 0;
+  }
+
+  if (scrollVelocity !== 0) {
+    window.scrollTo(0, scrollY);
+  }
+
+  // АЛГОРИТМ ВТОРОГО ВИДЕО
+  if (vid.duration > 0 && !isSeeking) {
+    const distance = window.scrollY - section.offsetTop;
+    const total = section.clientHeight - window.innerHeight;
+
+    let percentage = distance / total;
+    percentage = Math.max(0, Math.min(percentage, 1));
+
+    const calculatedTargetTime = vid.duration * percentage;
+    const timeDifference = Math.abs(calculatedTargetTime - vid.currentTime);
+
+    if (timeDifference > minTimeStep) {
+      isSeeking = true; 
+      vid.currentTime = calculatedTargetTime;
     }
   }
   
   requestAnimationFrame(renderLoop);
 };
 
-// Запуск первого видео (автоплей)
-vid1.play().catch(() => {
-  window.addEventListener('click', () => {
-    if (document.body.classList.contains('scroll-locked')) vid1.play();
-  }, { once: true });
-});
-
-// Таймер окончания первого видео и старт главного движка сайта
-setTimeout(() => {
-  isReadyForScroll = true;
-  document.body.classList.remove('scroll-locked');
-
-  // Плавное переключение прозрачности между видео
-  vid1.style.transition = 'opacity 0.4s ease';
-  vid.style.transition = 'opacity 0.4s ease';
-  vid1.style.opacity = '0';
-  vid.style.opacity = '1';
-
-  vid1.pause();
-  vid.currentTime = 0;
-  
-  // Привязываем стартовую координату физики к верху страницы
-  scrollY = window.scrollY;
-  scrollVelocity = 0;
-  
-  // Запускаем бесконечный рендер-цикл
-  requestAnimationFrame(renderLoop);
-}, 1583);
+// Пробуем стартовать видео мгновенно при чтении документа
+if (vid1.readyState >= 1) {
+  triggerFirstVideo();
+} else {
+  vid1.addEventListener('loadedmetadata', triggerFirstVideo);
+}
