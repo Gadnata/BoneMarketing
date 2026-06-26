@@ -262,7 +262,7 @@ body::before {
   background-repeat: no-repeat;
   background-position: top center;
   
-  opacity: 0.3; 
+  opacity: 0; 
   z-index: 999999; 
   pointer-events: none; 
 }
@@ -278,7 +278,7 @@ body {
    ========================================================================== */
 
 .vid {
-  
+  height: 3000px;
 }
 
 .holder {
