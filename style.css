@@ -262,7 +262,7 @@ body::before {
   background-repeat: no-repeat;
   background-position: top center;
   
-  opacity: 0; 
+  opacity: 0.3; 
   z-index: 999999; 
   pointer-events: none; 
 }
@@ -500,18 +500,18 @@ body {
   height: 45px; 
   box-sizing: border-box;
   background-color: rgb(11, 9, 9);
-  border: 1px solid rgba(77, 77, 77); 
+  border: 1px solid rgba(77, 77, 77); /* Серая рамка теперь полностью видна */
   font-family: "Geist-Mono", monospace;
   letter-spacing: 0px;
   cursor: pointer;
-  padding: 0; /* 🌟 Обнуляем дефолтные отступы кнопок */
+  padding: 0; 
 
   display: flex;
   align-items: center;    
   justify-content: center; 
   gap: 4px;               
   line-height: 1;         
-  white-space: nowrap; /* 🌟 Запрещаем тексту переноситься, удерживая баланс */
+  white-space: nowrap; 
   
   font-size: 16px;
   font-weight: 500; 
@@ -522,6 +522,10 @@ body {
   
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Поднимаем кнопку, чтобы клик работал без проблем */
+  position: relative;
+  z-index: 1;
 }
 
 .button-contact {
@@ -529,12 +533,67 @@ body {
 }
 
 .button img {
-  width: 20px; /* 🌟 Подсказка: для высоты кнопки 45px, иконка 20px-24px выглядит аккуратнее */
-  transform: translateX(-5px); /* 🌟 Легкий сдвиг иконки вверх для визуального баланса */
+  width: 20px; 
+  transform: translateX(-5px); 
 }
 
 .button-whatsapp {
   border: 1px solid rgba(50, 217, 81); 
+}
+
+/* 🌟 КОНТЕЙНЕР ДЛЯ КНОПКИ (ВАШ КЛАСС) */
+.crosses {
+  width: 190px;
+  height: 45px; 
+  box-sizing: border-box;
+  position: relative; /* Создаем контекст для наложения уголков сверху */
+}
+
+/* 🌟 ТОЛСТЫЕ БЕЛЫЕ УГОЛКИ ПОВЕРХ КНОПКИ */
+.crosses::before {
+  content: "";
+  /* Настройка длины уголков */
+  --corner-size: 12px; 
+
+  /* Идеально растягиваем поверх серой рамки кнопки */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  
+  /* Белая рамка делается толщиной 3px */
+  border: 2px solid rgb(255, 255, 255); 
+  z-index: 2; /* Ложится поверх кнопки */
+  pointer-events: none; /* Клик проходит сквозь уголки */
+
+  /* 🌟 ВАШ ТОЧНЫЙ CLIP-PATH БЕЗ THICKNESS */
+  clip-path: polygon(
+    0% 0%, 
+    var(--corner-size) 0%, 
+    var(--corner-size) 3px, 
+    calc(100% - var(--corner-size)) 3px, 
+    calc(100% - var(--corner-size)) 0%, 
+    100% 0%, 
+    
+    100% var(--corner-size), 
+    calc(100% - 3px) var(--corner-size), 
+    calc(100% - 3px) calc(100% - var(--corner-size)), 
+    100% calc(100% - var(--corner-size)), 
+    100% 100%, 
+    
+    calc(100% - var(--corner-size)) 100%, 
+    calc(100% - var(--corner-size)) calc(100% - 3px), 
+    var(--corner-size) calc(100% - 3px), 
+    var(--corner-size) 100%, 
+    0% 100%, 
+    
+    0% calc(100% - var(--corner-size)), 
+    3px calc(100% - var(--corner-size)), 
+    3px var(--corner-size), 
+    0% var(--corner-size)
+  );
 }
 
 .box {
@@ -831,6 +890,21 @@ body {
   /* Сглаживание пикселей для идеальной четкости */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.table {
+  color: white;
+  width: 100%;                  /* Таблица растягивается на всю доступную ширину */
+  max-width: 800px;             /* Но не становится шире 800px */
+  border-collapse: collapse;    /* Объединяем двойные рамки в одну */
+  font-family: "Geist-Mono", monospace; /* В стиле ваших кнопок */
+  margin: 40px auto;            /* Отступы сверху/снизу и центрирование */
+}
+
+.table td {
+  border: 1px solid #4d4d4d;    /* Серая обводка */
+  padding: 12px 15px;           /* Внутренние отступы в ячейках */
+  text-align: left;
 }
 
 .main-title-4 {
