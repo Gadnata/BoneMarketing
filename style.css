@@ -278,7 +278,7 @@ body {
    ========================================================================== */
 
 .vid {
-  height: 3000px;
+  
 }
 
 .holder {
@@ -608,7 +608,7 @@ body {
   /* 🌟 Пустая (прозрачная) заливка */
   background: transparent; 
   
-  /* Центрируем блок на странице и добавляем отступы сверху/снизу */
+  /* 210 1340 Центрируем блок на странице и добавляем отступы сверху/снизу */
   margin: 210px auto; 
   
   /* Включаем правильный расчет размеров, чтобы обводка не увеличивала блок */
@@ -621,7 +621,11 @@ body {
   /* Картинка заполнит весь прямоугольник и не сожмется, лишнее аккуратно обрежется */
   object-fit: cover; 
   /* Центрирует изображение внутри рамки */
-  object-position: center; 
+  /* Чем больше второе число, тем ниже опускается картинка */
+}
+
+.box-video-1 {
+  object-position: center 50%;
 }
 
 .outline {
@@ -893,18 +897,60 @@ body {
 }
 
 .table {
-  color: white;
-  width: 100%;                  /* Таблица растягивается на всю доступную ширину */
-  max-width: 800px;             /* Но не становится шире 800px */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 16px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  
+  color: white; /* Основной цвет заголовка */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 95%;                  /* Таблица растягивается на всю доступную ширину */           /* Но не становится шире 800px */
   border-collapse: collapse;    /* Объединяем двойные рамки в одну */
   font-family: "Geist-Mono", monospace; /* В стиле ваших кнопок */
-  margin: 40px auto;            /* Отступы сверху/снизу и центрирование */
+  margin: 80px auto;            /* Отступы сверху/снизу и центрирование */
+}
+
+.table thead th {
+  font-weight: 500;
+  line-height: 3;
 }
 
 .table td {
   border: 1px solid #4d4d4d;    /* Серая обводка */
-  padding: 12px 15px;           /* Внутренние отступы в ячейках */
+  padding: 10px 15px;           /* Внутренние отступы в ячейках */
   text-align: left;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 50%; /* Первый столбец с длинным текстом займет половину таблицы */
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 25%; /* Столбец BONETEAM */
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 25%; /* Столбец OTHERS */
+}
+
+.buttons-2-comparison {
+  margin: -30px auto auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button-recent {
+  border: 0.5px solid rgb(77, 77, 77); 
 }
 
 .main-title-4 {
@@ -921,7 +967,7 @@ body {
   text-transform: uppercase; /* Делает все буквы заглавными */
   
   /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
-  margin: 780px auto auto; 
+  margin: 230px auto auto; 
   
   /* Сглаживание пикселей для идеальной четкости */
   -webkit-font-smoothing: antialiased;
@@ -941,8 +987,64 @@ body {
   
   color: rgba(204, 204, 204); /* Основной цвет заголовка */
   /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
-  margin: 15px auto auto; 
+  margin: 25px auto auto; 
   max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.box-video-2 {
+  object-position: center 35%;
+}
+
+.main-title-5 {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.2px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 46px;
+  font-weight: 600; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: -200px auto auto; 
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.review-companies {
+  margin: 30px auto;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.review-companies img {
+  width: 55px;
+}
+
+.sub-title-4 {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 35px auto auto; 
   
   /* Сглаживание пикселей для идеальной четкости */
   -webkit-font-smoothing: antialiased;
