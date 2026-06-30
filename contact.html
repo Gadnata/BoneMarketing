@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BoneMarketing - CUSTOM MUSIC MARKETING</title>
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <link rel="stylesheet" href="style_contact.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-container">
+      
+      <a href="index.html"><img src="logo_text.PNG" class="logo"></a>
+
+      <ul class="navbar-menu">
+        <li><a href="#">PROCESS</a></li>
+        <li><a href="#">PROJECTS</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+        <li><a href="#">REVIEWS</a></li>
+      </ul>
+
+      <button class="button-contact-today">CONTACT TODAY</button>
+
+    </div>
+  </nav>
+
+  <div class="contact">
+    <div class="contact-text">
+
+      <div class="box-round-1">
+        <div class="box-round-point-1"></div>
+        <p class="box-round-text-1">#1 MARKETING TEAM</p>
+      </div>
+
+      <h1 class="contact-text-h1">LET’S TALK ABOUT YOUR PROJECT</h1>
+
+      <p class="contact-text-p">TELL US ABOUT YOUR BUSINESS AND YOUR GOALS! LEAVE YOUR CONTACT INFO BELOW, AND WE'LL REACH OUT SOON TO DISCUSS HOW WE CAN WORK TOGETHER.</p>
+
+      <button class="button button-whatsapp"><img src="whatsapp.png">WHATSAPP CHAT</button>
+
+    </div>
+    <div class="corners corners-2">
+      <div class="contact-box">
+        <div class="line-1">
+          <label for="user-name">Name</label>
+          <input type="text" id="user-name" class="user_data" placeholder="Name" autocomplete="name" required>
+
+          <label for="user-email">Email</label>
+          <input type="email" id="user-email" class="user_data" placeholder="example@mail.com" autocomplete="email" required>
+        </div>
+
+        <label for="user-phone">Phone</label>
+        <input type="tel" id="user-phone" class="user_data" placeholder="+1 (555) 067-67-67" autocomplete="tel" required>
+
+        <label for="service">Select Service</label>
+        <select id="service" class="user_data" name="service" required>
+          <option>-- Select --</option>
+          <option>Music Marketing</option>
+          <option>Video by BonEdit</option>
+          <option>Promo by BonEdit</option>
+          <option>Other</option>
+        </select>
+
+        <label for="service">Your Budget</label>
+        <select id="service" class="user_data" name="service" required>
+          <option>-- Select --</option>
+          <option>$300-1,500</option>
+          <option>1,500+</option>
+          <option>$3,000+</option>
+          <option>$10,000+</option>
+          <option>$50,000+</option>
+          <option>$150,000+</option>
+          <option>$500,000+</option>
+        </select>
+
+        <label for="user-message">Tell us about your idea !</label>
+        <textarea id="user-message" class="user_data" rows="5" placeholder="Your message..." required></textarea>
+
+
+        <div class="corners corners-1"><button class="button button-submit">SUBMIT</button></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

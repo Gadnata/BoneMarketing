@@ -267,42 +267,6 @@ body {
 }
 
 /* ==========================================================================
-   Скролл видео
-   ========================================================================== */
-
-.vid {
-  height: 3000px;
-}
-
-.holder {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-}
-
-.video-scroll  {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 108%;
-  object-fit: cover;
-  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-}
-
-#video1 {
-  z-index: -2;
-  opacity: 0.8;
-}
-
-#video2 {
-  z-index: -1;
-  opacity: 0;
-}
-
-/* ==========================================================================
    Навбар
    ========================================================================== */
 
@@ -372,6 +336,42 @@ body {
   display: block;          /* Убирает лишние скрытые отступы снизу картинки */
   object-fit: contain;     /* Защищает картинку от деформации и растягивания */
   cursor: pointer;
+}
+
+/* ==========================================================================
+   Скролл видео
+   ========================================================================== */
+
+.vid {
+  
+}
+
+.holder {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.video-scroll  {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 108%;
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+#video1 {
+  z-index: -2;
+  opacity: 0.8;
+}
+
+#video2 {
+  z-index: -1;
+  opacity: 0;
 }
 
 /* ==========================================================================
@@ -492,7 +492,7 @@ body {
   width: 190px;
   height: 45px; 
   box-sizing: border-box;
-  background-color: rgb(11, 9, 9);
+  background-color: rgb(11, 11, 11);
   border: 1px solid rgba(77, 77, 77); /* Серая рамка теперь полностью видна */
   font-family: "Geist-Mono", monospace;
   letter-spacing: 0px;
@@ -522,6 +522,10 @@ body {
   box-sizing: border-box;
 }
 
+.buttons-2-main a {
+  text-decoration: none;
+}
+
 .button-contact {
   color: rgba(255, 255, 255); 
 }
@@ -536,7 +540,7 @@ body {
 }
 
 /* 🌟 КОНТЕЙНЕР ДЛЯ КНОПКИ (ВАШ КЛАСС) */
-.crosses {
+.corners {
   width: 190px;
   height: 45px; 
   box-sizing: border-box;
@@ -544,7 +548,7 @@ body {
 }
 
 /* 🌟 ТОЛСТЫЕ БЕЛЫЕ УГОЛКИ ПОВЕРХ КНОПКИ */
-.crosses::before {
+.corners::before {
   content: "";
   /* Настройка длины уголков */
   --corner-size: 12px; 
@@ -907,6 +911,32 @@ body {
   width: 25%; /* Столбец OTHERS */
 }
 
+.table-box {
+  width: 22.5px;
+  height: 22.5px;
+  background-color: rgb(13, 13, 13);
+  border: 1px solid rgb(77, 77, 77); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-box img {
+  margin: auto auto;
+  width: 11px;
+  height: 11px;
+}
+
+.corners-2 {
+  width: 24.5px;
+  height: 24.5px;
+}
+
+.corners-2::before {
+  --corner-size: 6px;
+  border: 1.5px solid rgb(255, 255, 255);
+}
+
 .buttons-2-comparison {
   margin: 200px auto auto;
   display: flex;
@@ -980,15 +1010,25 @@ body {
   margin: 10px auto;
 }
 
+.corners-3 {
+  width: 680px;
+  height: 350px;
+}
+
+.corners-3::before {
+  --corner-size: 20px; 
+}
+
 .qdwjh {
-  margin: 100px auto; 
+  margin: 55px auto; 
 }
 
 .main-title-5 {
   letter-spacing: -1.2px; /* Буквы станут плотнее на 1 пиксель */
   font-size: 46px;
   font-weight: 600;
-  margin: -85px auto auto; 
+  margin: -3
+  0px auto auto; 
 }
 
 .review-companies {
@@ -1006,7 +1046,7 @@ body {
   margin: 35px auto;
 }
 
-.review {
+.reviews {
   margin: 45px auto;
   display: grid;
   grid-template-columns: repeat(2, 680px);
@@ -1016,9 +1056,84 @@ body {
 .review-box {
   height: 345px;
   width: 680px;
+  padding: 40px;
   background-color: black;
   border: 1px solid rgb(51, 51, 51); 
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+.review-author {
+  display: flex;
+  align-items: center; /* Центрирует тексты по высоте ровно по центру квадрата */
+  gap: 15px;           /* Создает красивый отступ между квадратом и текстом справа */
+}
+
+.review-text {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 14px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(255, 255, 255); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  margin: 0px 0px;
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Отступ между именем и подписью */
+}
+
+.review-logo-box {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(38, 38, 38);
+  border: 2px solid rgb(77, 77, 77); 
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-logo-box img {
+  width: 20px;
+  height: 20px;
+}
+
+.review-company {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.review-author {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(204, 204, 204);
+  margin: 0px 0px;
+}
+
+.corners-4 {
+  height: 345px;
+  width: 680px;
+}
+
+.corners-4::before {
+  --corner-size: 20px; 
 }
 
 .review-box-1 {
@@ -1043,6 +1158,10 @@ body {
   margin: 50px auto;
 }
 
+.corners-5 {
+  margin: -5px auto;
+}
+
 .main-title-6 {
   margin: 105px auto;
   font-size: 46px;
@@ -1053,13 +1172,108 @@ body {
   margin: -75px auto;
 }
 
+.questions {
+  margin: 150px auto;
+}
+
 .question {
   width: 1360px;
-  height: 470px;
-  margin: 150px auto;
+  height: 80px;
+  padding: 25px;
   background-color: black;
   border: 1px solid rgb(51, 51, 51); 
   box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  
+  display: flex;
+  justify-content: space-between; 
+  
+  /* 🌟 ИЗМЕНЕНИЕ 1: Прижимаем элементы к верхнему краю, 
+     чтобы они не падали вниз при увеличении высоты */
+  align-items: flex-start;
+  
+  /* 🌟 ИЗМЕНЕНИЕ 2: Задаем точный отступ сверху, 
+     чтобы отцентрировать элементы по вертикали внутри 80px.
+     Формула: (Высота 80px - Высота бокса 35px) / 2 = ~22px */
+  padding: 22px 25px 25px 25px; 
+  
+  /* Плавность раскрытия */
+  transition: height 0.3s ease-in-out, background-color 0.6s ease-in-out;
+}
+
+.question.open {
+  height: 160px; /* Увеличиваем высоту на 80px */
+  background-color: rgb(26, 26, 26);
+}
+
+.question-text {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 35px; 
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 16px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  
+  margin: 0; 
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.question-answer {
+  font-size: 12px;
+  max-width: 700px;
+  line-height: 1.5;
+  margin: 18px auto;
+}
+
+.question-box {
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgb(26, 26, 26); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question-box img {
+  margin: auto auto;
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease-in-out; 
+}
+
+.question.open .question-box img {
+  transform: rotate(45deg);
+}
+
+.corners-6 {
+  width: 36.5px;
+  height: 36.5px;
+  transition: height 0.3s ease-in-out; 
+}
+
+.corners-6::before {
+  --corner-size: 10px;
+  border: 1.5px solid rgb(128, 128, 128);
+}
+
+.corners-7 {
+  width: 1360px;
+  height: auto;
+  margin: auto auto;
+}
+
+.corners-7::before {
+  --corner-size: 20px; 
 }
 
 .main-title-7 {
@@ -1076,6 +1290,11 @@ body {
 .button-start-today {
   width: 260px;
   margin: 200px auto;
+}
+
+.corners-8 {
+  margin: auto auto;
+  width: 260px;
 }
 
 .footer-line {

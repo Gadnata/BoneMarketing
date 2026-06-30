@@ -138,3 +138,12 @@ if (vid1.readyState >= 1) {
 } else {
   vid1.addEventListener('loadedmetadata', triggerFirstVideo);
 }
+
+// Находим все блоки с классом .question на странице
+document.querySelectorAll('.question').forEach(block => {
+  // Вешаем на каждый блок событие клика
+  block.addEventListener('click', () => {
+    // toggle сам добавляет класс .open, если его нет, и убирает, если он есть
+    block.classList.toggle('open');
+  });
+});
