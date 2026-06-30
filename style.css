@@ -236,7 +236,7 @@
 
 html, body {
   margin: 0;
-  height: 1100vh;
+  height: 11012px;
   }
 
 html {
@@ -343,7 +343,7 @@ body {
    ========================================================================== */
 
 .vid {
-  
+  height: 3000px;
 }
 
 .holder {
@@ -911,7 +911,7 @@ body {
   width: 25%; /* Столбец OTHERS */
 }
 
-.table-box {
+.mark-box {
   width: 22.5px;
   height: 22.5px;
   background-color: rgb(13, 13, 13);
@@ -921,7 +921,7 @@ body {
   align-items: center;
 }
 
-.table-box img {
+.mark-box img {
   margin: auto auto;
   width: 11px;
   height: 11px;
@@ -966,9 +966,13 @@ body {
 .plan-box {
   width: 680px;
   height: 350px;
+  padding: 35px;
   background-color: black;
   border: 1px solid rgb(51, 51, 51); 
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
 }
 
 .plan-box-1 {
@@ -996,6 +1000,54 @@ body {
   background-repeat: repeat;
   background-size: 22px 22px; 
   background-position: -2px -1px;
+}
+
+.plan-box p, .plan-box h1 {
+    /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  margin: 0px;
+  
+  color: rgb(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.plan-box-top h1 {
+  color: white;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.plan-box-top p {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.plan-box-doned-task {
+  display: flex;
+  align-items: center; /* Центрирует тексты по высоте ровно по центру квадрата */
+  gap: 10px;           /* Создает красивый отступ между квадратом и текстом справа */
+  margin-top: 25px;
+}
+
+.plan-box-doned-task .mark-box img {
+  filter: brightness(0) invert(1);
+}
+
+.plan-box-doned-task p {
+  color: white;
+  font-size: 18px;
 }
 
 .step {
@@ -1297,20 +1349,69 @@ body {
   width: 260px;
 }
 
+.footer {
+  margin: 100px auto;
+}
+
 .footer-line {
   height: 1px;
   width: 100%;
   background-color: rgb(50, 50, 50);
-  margin:-110px auto;
 }
 
 .footer-logo {
-  height: 50px;            /* Задает аккуратную высоту под ваш навбар (высота навбара 100px) */
+  height: 50px;
   width: auto;
-  margin: 160px 40px;
+  margin: 60px 40px;
 }
 
 .footer-title {
   font-size: 14px;
-  margin: -150px -210px;
+  margin: -50px -210px;
+}
+
+.footer-columns {
+  margin: 150px 40px;
+  display: flex;
+  flex-direction: row; /* Выстраивает 3 колонки в один ряд слева направо */
+  justify-content: flex-start;
+  gap: 400px; /* Фиксированное расстояние между невидимыми столбиками */
+  background-color: black; /* Для наглядности, так как текст белый */
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column; /* Тексты внутри колонки идут строго сверху вниз */
+  align-items: flex-start; /* Прижимает все тексты внутри колонки к её левому краю */
+}
+
+.footer-column-main-text {
+  font-family: "Geist-Mono", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(204, 204, 204);
+  letter-spacing: 1px;
+  margin: 0; /* Сброс браузерных отступов */
+  
+  /* 🌟 ГЛАВНОЕ: Отступ снизу, чтобы отодвинуть идущие следом ссылки */
+  margin-bottom: 30px; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.footer-column-text {
+  font-family: "Geist-Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(255, 255, 255); /* Делаем ссылки чуть бледнее для иерархии */
+  line-height: 1.5;
+  text-decoration: none;
+  
+  margin: 0; /* Сброс браузерных отступов */
+  
+  /* Небольшой зазор между самими строчками-ссылками */
+  margin-bottom: 12px; 
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
