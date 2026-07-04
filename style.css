@@ -236,7 +236,7 @@
 
 html, body {
   margin: 0;
-  height: 11012px;
+  scroll-behavior: smooth;
   }
 
 html {
@@ -264,6 +264,25 @@ body {
   position: relative;
   min-height: 100vh;
   margin: 0;
+}
+
+.navbar-menu a, .footer-columns a {
+  background:
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 100% 100%,
+    linear-gradient(currentColor 0 0) 100% 100%;
+  background-size: var(--d, 0) 1px, 1px var(--d, 0);
+  background-repeat: no-repeat;
+  transition: 0.5s;
+  padding: 5px 10px;
+}
+.navbar-menu a:hover, .footer-columns a:hover {
+  --d: 8px;
 }
 
 /* ==========================================================================
@@ -327,6 +346,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 10px 16px;
   cursor: pointer;
+  transition: 0.5s;
+}
+
+.button-contact-today:hover {
+  transform: scale(110%);
+  background-color: rgba(255, 255, 255);
+  color: black;
 }
 
 /* Ограничиваем размер картинки логотипа */
@@ -537,6 +563,13 @@ body {
 
 .button-whatsapp {
   border: 1px solid rgba(50, 217, 81); 
+  transition: 0.5s;
+}
+
+.button-whatsapp:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgba(50, 217, 81);
+  transform: scale(110%);
 }
 
 /* 🌟 КОНТЕЙНЕР ДЛЯ КНОПКИ (ВАШ КЛАСС) */
@@ -545,6 +578,7 @@ body {
   height: 45px; 
   box-sizing: border-box;
   position: relative; /* Создаем контекст для наложения уголков сверху */
+  transition: 0.5s;
 }
 
 /* 🌟 ТОЛСТЫЕ БЕЛЫЕ УГОЛКИ ПОВЕРХ КНОПКИ */
@@ -592,6 +626,15 @@ body {
     3px var(--corner-size), 
     0% var(--corner-size)
   );
+  transition: 0.5s;
+}
+
+.corners-1:hover {
+  transform: scale(110%); 
+}
+
+.corners-1:hover::before {
+  --corner-size: 16px;
 }
 
 .box {
@@ -637,6 +680,8 @@ body {
 .outline {
   /* 🌟 ОДНО ЗНАЧЕНИЕ ДЛЯ НАСТРОЙКИ УГОЛКОВ (меняйте только его) */
   --corner-size: 8px; 
+
+  scroll-margin-top: 120px;
 
   margin: 495px auto 10px;
   width: 155px;
@@ -717,7 +762,7 @@ body {
   flex-direction: column;  /* Элементы идут сверху вниз */
   align-items: center;
   width: 275px;
-  border: 2px solid rgba(38, 38, 38); 
+  border: 1px solid rgba(38, 38, 38); 
   background: rgba(10, 10, 10); 
   box-sizing: border-box;
   box-shadow: 4px 4px 0px rgb(38, 38, 38);
@@ -775,7 +820,7 @@ body {
   
   /* 🌟 Задаем точные параметры из вашей задачи */
   font-size: 24px;
-  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
   text-align: center; /* Выравнивание строго по центру экрана */
   
   color: rgba(77, 77, 77); /* Основной цвет заголовка */
@@ -945,7 +990,15 @@ body {
 }
 
 .button-recent {
-  border: 0.5px solid rgb(77, 77, 77); 
+  border: 0.5px solid rgb(77, 77, 77);
+  transition: 0.5s;
+  background-color: black;
+}
+
+.button-recent:hover {
+  transform: scale(110%);
+  background: white;
+  color: black;
 }
 
 .main-title-4 {
@@ -961,6 +1014,7 @@ body {
 
 .plan {
   margin: 80px auto;
+  scroll-margin-top: 120px;
 }
 
 .plan-box {
@@ -1100,6 +1154,7 @@ body {
 
 .reviews {
   margin: 45px auto;
+  scroll-margin-top: 120px;
   display: grid;
   grid-template-columns: repeat(2, 680px);
   justify-content: center;
@@ -1214,6 +1269,14 @@ body {
   margin: -5px auto;
 }
 
+.corners-5:hover {
+  transform: scale(110%);
+}
+
+.corners-5:hover::before {
+  --corner-size: 16px;
+}
+
 .main-title-6 {
   margin: 105px auto;
   font-size: 46px;
@@ -1251,7 +1314,11 @@ body {
   padding: 22px 25px 25px 25px; 
   
   /* Плавность раскрытия */
-  transition: height 0.3s ease-in-out, background-color 0.6s ease-in-out;
+  transition: height 0.3s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.question:hover {
+  background-color: rgb(11, 11, 11);
 }
 
 .question.open {
@@ -1349,8 +1416,21 @@ body {
   width: 260px;
 }
 
+.corners-8:hover {
+  transform: scale(110%);
+}
+
+.corners-8:hover::before {
+  --corner-size: 16px;
+}
+
+/* ==========================================================================
+   Футэр
+   ========================================================================== */
+
 .footer {
   margin: 100px auto;
+  margin-bottom: 220px;
 }
 
 .footer-line {

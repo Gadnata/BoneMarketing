@@ -2,14 +2,8 @@ const section = document.querySelector('section.vid');
 const vid = section.querySelector('#video2');
 const vid1 = section.querySelector('#video1');
 
-// Флаг готовности к работе плавного скролла
+// Флаг готовности к работе скролла
 let isReadyForScroll = false;
-
-// НАСТРОЙКИ ДЛЯ СУПЕР-ДЛИННОЙ И ПЛАВНОЙ АНИМАЦИИ САЙТА
-let scrollY = 0;       
-let scrollVelocity = 0; 
-const friction = 0.94;       // Тягучесть скролла
-const stepMultiplier = 0.08; // Мягкость отклика на колесо
 
 // НАСТРОЙКИ ДЛЯ БОРЬБЫ С ЛАГАМИ ВТОРОГО ВИДЕО В CHROME
 let isSeeking = false;     
@@ -41,22 +35,9 @@ const activateSmoothScrollEngine = () => {
   vid1.pause();
   vid.currentTime = 0;
 
-  // Инициализируем стартовые координаты физики
-  scrollY = window.scrollY;
-  scrollVelocity = 0;
-
-  // Навешиваем слушатель колеса ТОЛЬКО СЕЙЧАС, чтобы не злить браузер при старте
-  window.addEventListener('wheel', handleWheelInput, { passive: false });
-  
-  // Запускаем бесконечный цикл анимации
+  // Запускаем бесконечный цикл анимации видео
   requestAnimationFrame(renderLoop);
 };
-
-// Функция обработки колеса мыши (работает только ПОСЛЕ таймера)
-function handleWheelInput(e) {
-  e.preventDefault(); 
-  scrollVelocity += e.deltaY * stepMultiplier;
-}
 
 // 🌟 БЕЗОПАСНЫЙ ЗАПУСК ПЕРВОГО ВИДЕО (Прямой вызов без посредников)
 const triggerFirstVideo = () => {
@@ -82,37 +63,11 @@ window.addEventListener('click', triggerFirstVideo, { once: true });
 window.addEventListener('wheel', triggerFirstVideo, { once: true });
 
 
-// ЕДИНЫЙ ЦИКЛ АНИМАЦИИ (Включается только после завершения video1)
+// ЦИКЛ СИНХРОНИЗАЦИИ ВИДЕО С ОБЫЧНЫМ СКРОЛЛОМ
 const renderLoop = () => {
   if (!isReadyForScroll) return;
 
-  const absVelocity = Math.abs(scrollVelocity);
-
-  // ИДЕАЛЬНАЯ ФИНАЛЬНАЯ ДОВОДКА СТРАНИЦЫ
-  if (absVelocity < 0.15) {
-    scrollVelocity = 0;
-  } else if (absVelocity < 1.5) {
-    scrollVelocity *= 0.75; 
-  } else {
-    scrollVelocity *= friction; 
-  }
-
-  scrollY += scrollVelocity;
-
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  if (scrollY < 0) {
-    scrollY = 0;
-    scrollVelocity = 0;
-  } else if (scrollY > maxScroll) {
-    scrollY = maxScroll;
-    scrollVelocity = 0;
-  }
-
-  if (scrollVelocity !== 0) {
-    window.scrollTo(0, scrollY);
-  }
-
-  // АЛГОРИТМ ВТОРОГО ВИДЕО
+  // АЛГОРИТМ ВТОРОГО ВИДЕО (теперь привязан к нативной позиции окна)
   if (vid.duration > 0 && !isSeeking) {
     const distance = window.scrollY - section.offsetTop;
     const total = section.clientHeight - window.innerHeight;
@@ -139,11 +94,10 @@ if (vid1.readyState >= 1) {
   vid1.addEventListener('loadedmetadata', triggerFirstVideo);
 }
 
-// Находим все блоки с классом .question на странице
+// Находим все блоки с классом .question на странице (ВАШ КОД СОХРАНЕН)
 document.querySelectorAll('.question').forEach(block => {
   // Вешаем на каждый блок событие клика
   block.addEventListener('click', () => {
-    // toggle сам добавляет класс .open, если его нет, и убирает, если он есть
     block.classList.toggle('open');
   });
 });

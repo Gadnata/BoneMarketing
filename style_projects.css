@@ -265,7 +265,7 @@ body {
   margin: 0;
 }
 
-.navbar-menu a, .footer-columns a {
+.navbar-menu a, .footer-columns a, .box-recent a {
   background:
     linear-gradient(currentColor 0 0) 0 0,
     linear-gradient(currentColor 0 0) 0 0,
@@ -280,7 +280,7 @@ body {
   transition: 0.5s;
   padding: 5px 10px;
 }
-.navbar-menu a:hover, .footer-columns a:hover {
+.navbar-menu a:hover, .footer-columns a:hover, .box-recent a:hover {
   --d: 8px;
 }
 
@@ -367,74 +367,36 @@ body {
    Остальная часть главной страницы
    ========================================================================== */
 
-.contact {
-  margin: 150px auto;
+.projects {
+  display: grid;
+  /* Делим доступные 95% ширины на две колонки: 35% и 60% */
+  grid-template-columns: 30% 70% ;
+  /* Автоматически распределяем оставшиеся 5% как свободное место между ними */
+  justify-content: space-between; 
+  width: 95%;
+  margin: 0 auto; /* Центрируем саму сетку на странице */
+}
+
+.box-recent {
+  height: 140px;
+  width: 95%;
+  margin: 100px auto 0px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 140px;
+  align-items: center;  
 }
 
-.contact-text {
-  width: 600px;
-  height: 300px;
-}
-
-.box-round-1 {
-  /* 1. ВКЛЮЧАЕМ ПОЗИЦИОНИРОВАНИЕ (Без этого top не работает!) */
-
-  /* 3. УПРАВЛЕНИЕ ВЫСОТОЙ (МЕНЯЙТЕ ЭТО ЧИСЛО ДЛЯ СДВИГА) */
-  /* Поставьте 350px, 400px или 500px — теперь оно ОБЯЗАНО отреагировать */
-  width: 190px !important;
-  height: 35px !important;
-
-  /* 5. ВНЕШНИЙ ВИД (Прозрачный фон, белая обводка и скругление) */
-  background-color: transparent;
-  border: 1px solid #ffffff; 
-  border-radius: 9999px;
-
-  /* 6. ВЫРАВНИВАНИЕ ТЕКСТА ВНУТРИ КАПСУЛЫ */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.box-round-point-1 {
-  width: 7px;
-  height: 7px;
-  background-color: rgba(255, 0, 0); /* Цвет центральной точки */
-  border-radius: 999px;
-  border: 3.5px solid rgb(180, 0, 0); 
-}
-
-.box-round-text-1 {
-  font-family: 'Chakra Petch', sans-serif;
-  
-  /* 🌟 Задаем точные параметры из вашей задачи */
-  font-size: 14px;
-  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
-  text-align: center; /* Выравнивание строго по центру экрана */
-  
-  color: white; /* Основной цвет заголовка */
-  text-transform: uppercase; /* Делает все буквы заглавными */
-  
-  /* Сглаживание пикселей для идеальной четкости */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.contact-text-h1 {
-  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+.box-recent h1 {
   font-family: 'Chakra Petch', sans-serif;
   letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
   line-height: 1;
   
   /* 🌟 Задаем точные параметры из вашей задачи */
-  font-size: 52px;
+  font-size: 46px;
   font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
   text-align: left; /* Выравнивание строго по центру экрана */
-  margin: 20px 0px;
+  margin-left: 50px;
   color: white; /* Основной цвет заголовка */
   text-transform: uppercase; /* Делает все буквы заглавными */
   
@@ -443,11 +405,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.contact-text-p {
-  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+.box-recent a {
   font-family: "Geist-Mono", monospace;
   letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
-  line-height: 1.5;
+  text-decoration: none;
   
   /* 🌟 Задаем точные параметры из вашей задачи */
   font-size: 14px;
@@ -456,37 +417,45 @@ body {
   
   color: rgba(204, 204, 204); /* Основной цвет заголовка */
   /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
-  max-width: 500px; /* Ограничение ширины для красивого переноса строк */
+  margin-left: 40px;
   
   /* Сглаживание пикселей для идеальной четкости */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.button {
-  width: 190px;
-  height: 45px; 
+.project-button-box {
+  height: 600px;
+  padding: 50px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  border-right: none;
+  border-top: none;
+}
+
+.button-start {
+  width: 200px;
+  height: 35px;
   box-sizing: border-box;
   background-color: rgb(11, 11, 11);
-  border: 1px solid rgba(77, 77, 77);
+  border: 1px solid rgba(77, 77, 77); /* Серая рамка теперь полностью видна */
   font-family: "Geist-Mono", monospace;
   letter-spacing: 0px;
   cursor: pointer;
   padding: 0; 
-  margin: 25px 0px;
 
   display: flex;
   align-items: center;    
   justify-content: center; 
   gap: 4px;               
-  line-height: 1;         
+  line-height: 1;
   white-space: nowrap; 
   
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 500; 
-  text-align: center; 
+  text-align: center;
   
-  color: rgb(204, 204, 204); 
+  color: rgba(204, 204, 204); 
   text-transform: uppercase; 
   
   -webkit-font-smoothing: antialiased;
@@ -498,98 +467,11 @@ body {
   box-sizing: border-box;
 }
 
-.button img {
-  width: 20px; 
-  transform: translateX(-5px); 
-}
-
-.button-whatsapp {
-  border: 1px solid rgba(50, 217, 81); 
-  transition: 0.5s;
-}
-
-.button-whatsapp:hover {
-  background-color: rgb(255, 255, 255);
-  color: rgba(50, 217, 81);
-  transform: scale(110%);
-}
-
-.contact-box {
-  width: 600px;
-  height: auto;
-  padding: 40px;
-  box-sizing: border-box;
-  background-color: rgba(11, 11, 11, 0.5);
-  border: 1px solid rgba(77, 77, 77); /* Серая рамка теперь полностью видна */
-  -webkit-backdrop-filter: blur(5px); /* Для Safari */
-  backdrop-filter: blur(5px);         /* Для остальных */
-}
-
-.contact-box label {
-  font-family: "Geist-Mono", monospace;
-  letter-spacing: -0.4px; /* Буквы станут плотнее на 1 пиксель */
-  line-height: 1.5;
-  
-  /* 🌟 Задаем точные параметры из вашей задачи */
-  font-size: 12px;
-  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
-  text-align: left; /* Выравнивание строго по центру экрана */
-  
-  color: rgba(204, 204, 204); /* Основной цвет заголовка */
-  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
-  margin: 150px auto;
-  
-  /* Сглаживание пикселей для идеальной четкости */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.contact-box input, select, textarea {
-  outline: none;
-  appearance: none;
-  border-radius: 0; 
-  font-family: "Geist-Mono", monospace;
-  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
-  
-  /* 🌟 Задаем точные параметры из вашей задачи */
-  font-size: 14px;
-  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
-  text-align: left; /* Выравнивание строго по центру экрана */
-  
-  color: rgba(204, 204, 204); /* Основной цвет заголовка */
-  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
-  
-  /* Сглаживание пикселей для идеальной четкости */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: 100%;
-  height: 45px;
-  box-sizing: border-box;
-  padding: 15px;
-  background-color: rgba(36, 36, 36);
-  border: 1px solid rgba(46, 46, 46); /* Серая рамка теперь полностью видна */
-}
-
-.contact-box textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.line-1 input {
-  width: 40%;
-}
-
-.button-submit {
-  width: 100%;
-  margin: 10px auto;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
 .corners {
-  width: 100%;
-  height: 45px; 
+  width: 200px;
+  height: 35px; 
   box-sizing: border-box;
-  position: relative; /* Создаем контекст для наложения уголков сверху */
+  position: relative;
   transition: 0.5s;
 }
 
@@ -597,7 +479,7 @@ body {
 .corners::before {
   content: "";
   /* Настройка длины уголков */
-  --corner-size: 12px; 
+  --corner-size: 10px; 
 
   /* Идеально растягиваем поверх серой рамки кнопки */
   position: absolute;
@@ -641,21 +523,119 @@ body {
   transition: 0.5s;
 }
 
-.corners-1:hover {
-  transform: scale(105%); 
+.corners:hover {
+  transform: scale(110%); 
 }
 
-.corners-1:hover::before {
-  --corner-size: 16px;
+.corners:hover::before {
+  --corner-size: 14px;
 }
 
-.corners-2 {
-  width: 600px;
-  height: auto;
+.project-button-box p {
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 12px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgb(71, 71, 71); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin-top: 10px;
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.corners-2::before {
-  --corner-size: 20px;
+.content-sticky {
+  overflow-y: none;
+  position: sticky;
+  top: 115px; /* Создаем контекст для наложения уголков сверху */
+}
+
+.project {
+  height: 600px;
+  padding: 50px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  border-top: none;
+}
+
+.project p {
+  margin: 0px;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 30px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgb(255, 255, 255); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.image-frame {
+  height: 400px;
+  width: 700px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.image-frame-1 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("pattern_plus.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -3px 1px;
+}
+
+.image-frame-2 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("pattern_cross.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -3px 1px;
+}
+
+.image-frame-3 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("pattern_grid.png");
+  background-repeat: repeat;
+  background-size: 18px 18px; 
+  background-position: 7px 1px; 
+}
+
+.image-frame iframe {
+  height: 472px;
+  width: 700px;
+  transform: scale(65%);
+}
+
+.montagem-elder iframe {
+  height: 522px;
+}
+
+.project-button-box-last {
+  border-bottom: none;
+}
+
+.project-last {
+  border-bottom: none;
 }
 
 /* ==========================================================================
@@ -663,7 +643,6 @@ body {
    ========================================================================== */
 
 .footer {
-  margin: 100px auto;
   margin-bottom: 300px;
 }
 
