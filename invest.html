@@ -174,16 +174,13 @@ const CONFIG = {
     // ИИ работает через ваш Cloudflare Worker (см. worker.js). Без адреса показывается встроенная офлайн-оценка.
     AI_PROXY_URL: 'https://investai.invest-ai.workers.dev',
     AI_TIMEOUT: 45000,
+    // Минимальная доля портфеля с данными, при которой строка «Портфель» вообще показывается.
+    MIN_COVER: 50,
     AI_YEARS: [1, 3, 5, 10, 20, 30, 40, 50, 80, 100]
 };
 
 const DEFAULTS = [
-    { n: 'Инфляционные облигации', t: 'bTIPS', p: 30, c: '#ffffff', a: 0.55 },
-    { n: 'Недвижимость', t: 'RealT', p: 20, c: '#006eff', a: 0.8 },
-    { n: 'Продукты и товары', t: 'bXLP', p: 15, c: '#b400ff', a: 0.8 },
-    { n: 'Медицина и аптеки', t: 'bXLV', p: 15, c: '#ff005a', a: 0.8 },
-    { n: 'Энергетика и ЖКХ', t: 'bXLU', p: 10, c: '#00f0f0', a: 0.8 },
-    { n: 'Ликвидный кэш', t: 'Ondo USDY/USDT', p: 10, c: '#f0f000', a: 0.75 }
+    { n: 'Добавьте 1 инвестицию', t: 'bone', p: 100, c: '#ffffff', a: 1, ph: true }
 ];
 
 const PALETTE = ['#ff9500', '#34c759', '#5e5ce6', '#ff2d55', '#64d2ff', '#ffd60a', '#bf5af2', '#30d158'];
@@ -246,14 +243,15 @@ const pushRecent = color => {
 };
 
 const encode = () => {
-    const data = items.map(x => [x.n, x.t, Math.round(x.p * 100) / 100, x.c, x.a]);
+    const data = items.map(x => [x.n, x.t, Math.round(x.p * 100) / 100, x.c, x.a, x.ph ? 1 : 0]);
     return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 };
 
 const decode = str => {
     const data = JSON.parse(decodeURIComponent(escape(atob(str))));
     if (!Array.isArray(data) || !data.length) throw new Error('empty');
-    return data.map(([n, t, p, c, a]) => ({
+    return data.map(([n, t, p, c, a, ph]) => ({
+        ph: !!ph,
         n: String(n).slice(0, 60),
         t: String(t).slice(0, 40),
         p: Math.max(0.01, Number(p) || 1),
@@ -359,6 +357,7 @@ const setShare = (x, value) => {
 const bindEditable = (el, x, key, fallback, max) => {
     el.addEventListener('input', () => {
         x[key] = el.textContent.slice(0, max);
+        x.ph = false;
         requestRender();
     });
     el.addEventListener('keydown', e => {
@@ -499,12 +498,14 @@ const render = () => {
             const tr = r * .63;
             const tx = CENTER + tr * Math.cos(mid);
             const ty = CENTER + tr * Math.sin(mid);
-            ctx.fillStyle = '#fff';
+            const v = parseInt(x.c.slice(1), 16);
+            const light = ((0.299 * (v >> 16 & 255) + 0.587 * (v >> 8 & 255) + 0.114 * (v & 255)) / 255) * x.a > 0.7;
+            ctx.fillStyle = light ? '#000' : '#fff';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.font = `600 ${24 * k}px sans-serif`;
             ctx.fillText(x.n, tx, ty - 16 * k);
-            ctx.fillStyle = 'rgba(255,255,255,.85)';
+            ctx.fillStyle = light ? 'rgba(0,0,0,.7)' : 'rgba(255,255,255,.85)';
             ctx.font = `500 ${19 * k}px sans-serif`;
             ctx.fillText(`${x.t} • ${pct}%`, tx, ty + 16 * k);
         }
@@ -545,8 +546,9 @@ const toggle = id => {
 };
 
 const removeItem = id => {
-    if (items.length === 1) { toast('Нужна хотя бы одна инвестиция'); return; }
+    if (items.length === 1 && items[0].ph) { toast('Нажмите +, чтобы добавить инвестицию'); return; }
     items = items.filter(i => i.id !== id);
+    if (!items.length) items = DEFAULTS.map(makeItem);
     if (!items.some(i => i.enabled)) items[0].enabled = true;
     if (hoveredId === id) hoveredId = null;
     closePopover();
@@ -555,6 +557,7 @@ const removeItem = id => {
 };
 
 const addItem = () => {
+    if (items.length === 1 && items[0].ph) items = [];
     const color = PALETTE[items.length % PALETTE.length];
     const x = makeItem({ n: 'Новая инвестиция', t: 'TICKER', p: 10, c: color, a: 0.8 });
     items.push(x);
@@ -666,7 +669,7 @@ let aiCache = { key: '', html: '' };
 
 const aiFunds = () => {
     const sum = totalWeight();
-    return items.filter(x => x.enabled).map(x => ({
+    return items.filter(x => x.enabled && !x.ph).map(x => ({
         id: x.id, name: x.n, ticker: x.t, weight: shareOf(x, sum), color: x.c
     }));
 };
@@ -675,42 +678,32 @@ const closeAi = () => aiPanel.classList.remove('open');
 const openAi = () => aiPanel.classList.add('open');
 
 
-const buildPrompt = funds => `Ты финансовый аналитик. Для каждой позиции оцени среднегодовую доходность (CAGR, номинальная, % годовых, в USD) за последние ${CONFIG.AI_YEARS.join(', ')} лет.
+const buildPrompt = (funds, data) => `Ты финансовый аналитик. Оцени портфель целиком и ответь по-русски.
 Правила:
-1. Токенизированный актив (токен акции, ETF, облигации, золота, недвижимости и т.п.) равен базовому активу 1 к 1. Поэтому доходность и срок истории бери по базовой акции, ETF или активу и по дате его запуска, а не по дате запуска токена или эмитента.
-2. Рядом с тикером могут быть названия эмитентов токена (например «bXLP Backed, Ondo, Dinari»). Это не часть тикера. Разные эмитенты одного актива дают одну и ту же историю доходности.
-3. Если базового актива не существовало за весь срок (он появился позже), ставь null для этого срока. Не подставляй индексы или аналоги.
-4. since: год, с которого существует базовый актив (число) или null.
-5. Округляй до 0.1. Если оценить честно нельзя, ставь null.
-6. Сейчас ${new Date().getFullYear()} год. Срок в N лет возможен, только если актив существовал N лет назад. Иначе ставь null. Никогда не растягивай историю дальше года запуска.
-7. Если не уверен в цифре, ставь null. Лучше null, чем выдумка. Не придумывай историю для платформ и неликвидных активов: RealT (токенизированная недвижимость) существует с 2019 года, USDY с 2023 года.
-8. Известные годы запуска базовых активов: XLP, XLV, XLU (сектора S&P 500) с 1998, ETF на TIPS (TIP) с 2003.
+1. Не придумывай цифры доходности. Используй только данные ниже. Если данных по позиции нет, не называй для неё цифр.
+2. Токенизированный актив (токен акции, ETF, облигации, недвижимости) равен базовому активу 1 к 1. Рядом с тикером могут быть названия эмитентов токена (например «bXLP Backed, Ondo, Dinari»), это не часть тикера.
+3. Если у токена указано несколько эмитентов, отметь, что это снижает риск одного эмитента. Если эмитент один или не указан, отметь концентрацию риска эмитента.
 
 Позиции:
-${funds.map((f, i) => `${i + 1}. ${f.name} (${f.ticker}), доля ${f.weight}%`).join('\n')}
+${funds.map((f, i) => {
+    const d = data && data[f.ticker];
+    const facts = d ? `, данные с ${d.since} года, среднегодовая доходность: ${CONFIG.AI_YEARS.filter(y => d.returns[y] != null).map(y => `${y} л. ${d.returns[y]}%`).join(', ') || 'нет'}` : ', данных о доходности нет';
+    return `${i + 1}. ${f.name} (${f.ticker}), доля ${f.weight}%${facts}`;
+}).join('\n')}
 
-Кроме таблицы, оцени портфель целиком с учётом долей: summary (1-2 предложения о том, что это за портфель), pros (2-3 плюса), cons (2-3 минуса и риска), ideas (2-3 идеи, что стоит попробовать или изменить). Если у токена указано несколько эмитентов, отметь, что это снижает риск одного эмитента. Если у токена эмитент один или не указан, отметь концентрацию риска эмитента. Каждый пункт до 18 слов, по-русски, конкретно, без гарантий доходности.
+Дай: summary (1-2 предложения о том, что это за портфель), pros (2-3 плюса), cons (2-3 минуса и риска), ideas (2-3 идеи, что стоит попробовать или изменить). Каждый пункт до 18 слов, конкретно, без гарантий доходности.
 
 Ответь ТОЛЬКО валидным JSON без пояснений и без markdown, строго в формате:
-{"funds":[{"since":год_или_null,"returns":{${CONFIG.AI_YEARS.map(y => `"${y}":число_или_null`).join(',')}}}],"summary":"текст","pros":["..."],"cons":["..."],"ideas":["..."]}
-Порядок позиций в массиве должен совпадать с порядком в списке. Всего позиций: ${funds.length}.`;
+{"summary":"текст","pros":["..."],"cons":["..."],"ideas":["..."]}`;
 
 const listOf = v => Array.isArray(v) ? v.map(x => String(x).slice(0, 220)).filter(Boolean).slice(0, 4) : [];
 
-const parseAi = (text, count) => {
+const parseReview = text => {
     const clean = text.replace(/```json|```/g, '');
-    const s = clean.indexOf('{'), e = clean.lastIndexOf('}');
-    if (s < 0 || e < 0) throw new Error('bad json');
-    const data = JSON.parse(clean.slice(s, e + 1));
-    if (!Array.isArray(data.funds) || data.funds.length < count) throw new Error('bad shape');
+    const i = clean.indexOf('{'), j = clean.lastIndexOf('}');
+    if (i < 0 || j < 0) throw new Error('bad json');
+    const data = JSON.parse(clean.slice(i, j + 1));
     return {
-        funds: data.funds.slice(0, count).map(f => ({
-            since: Number(f.since) >= 1800 && Number(f.since) <= 2100 ? Math.round(Number(f.since)) : null,
-            returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => {
-                const v = Number(f.returns && f.returns[y]);
-                return [y, f.returns && f.returns[y] != null && isFinite(v) ? v : null];
-            }))
-        })),
         summary: String(data.summary || '').slice(0, 400),
         pros: listOf(data.pros),
         cons: listOf(data.cons),
@@ -748,7 +741,7 @@ const renderAi = (funds, parsed) => {
             acc += v * funds[i].weight;
             w += funds[i].weight;
         }
-        if (!w) return null;
+        if (w < CONFIG.MIN_COVER) return null;
         if (missing) anyPartial = true;
         return { v: acc / w, partial: missing, cover: w };
     });
@@ -759,96 +752,85 @@ const renderAi = (funds, parsed) => {
         : '';
 
     return `<div class="ai-scroll"><table class="ai-table">${head}${rows}${totalRow}</table></div>
-        <div class="ai-review">${parsed.summary ? `<p>${escapeHtml(parsed.summary)}</p>` : ''}${block('Плюсы', 'pros', parsed.pros)}${block('Минусы', 'cons', parsed.cons)}${block('Что попробовать или изменить', 'ideas', parsed.ideas)}</div>${anyPartial ? '<div class="ai-src">* Для сроков, где у позиции нет данных (✕), её доля распределена между остальными позициями пропорционально их долям.</div>' : ''}`;
+        <div class="ai-review">${parsed.summary ? `<p>${escapeHtml(parsed.summary)}</p>` : ''}${block('Плюсы', 'pros', parsed.pros)}${block('Минусы', 'cons', parsed.cons)}${block('Что попробовать или изменить', 'ideas', parsed.ideas)}</div>${(parsed.notes || []).map(n => `<div class="ai-src">${escapeHtml(n)}</div>`).join('')}<div class="ai-src">Портфель: средневзвешенное по долям (приближённо, без учёта ребалансировки).${anyPartial ? ` * Для сроков, где у части позиций нет данных (✕), их доля распределена между остальными пропорционально. Если данных меньше чем по ${CONFIG.MIN_COVER}% портфеля, итог не показывается.` : ''}</div>`;
 };
-
-/* Годы запуска известных базовых активов: по ним обрезаем выдуманную историю в ответе ИИ. */
-const KNOWN_ASSETS = [
-    { since: 2003, re: /tips|инфляц/i },
-    { since: 1998, re: /xlp|продукт|товар/i },
-    { since: 1998, re: /xlv|медицин|аптек|health/i },
-    { since: 1998, re: /xlu|энергет|жкх|utilit/i },
-    { since: 2019, re: /realt|недвижим|real\s*estate/i },
-    { since: 2023, re: /usdy|usdt|usdc|кэш|cash|налич/i }
-];
 
 const aiReason = err => {
     const m = String(err && err.message || err || '');
     if (!CONFIG.AI_PROXY_URL) return 'не указан адрес сервера ИИ';
-    const detail = ` (${err && err.name ? err.name + ': ' : ''}${m})`;
     if (err && err.name === 'AbortError') return 'истекло время ожидания';
     if (/http 429/.test(m)) return 'исчерпан дневной лимит, попробуйте позже';
-    if (/http 5\d\d|http 403/.test(m)) return 'сервер ИИ недоступен или отклонил запрос';
-    if (/bad json|bad shape|JSON/.test(m)) return 'ИИ вернул ответ в непонятном формате, попробуйте ещё раз';
-    if (/fetch|Load failed|NetworkError/i.test(m)) return 'нет связи с сервером ИИ' + detail;
-    return (m || 'неизвестная ошибка');
+    if (/http 5\d\d|http 403/.test(m)) return 'сервер недоступен или отклонил запрос';
+    if (/bad json|JSON/.test(m)) return 'ответ в непонятном формате, попробуйте ещё раз';
+    if (/fetch|Load failed|NetworkError/i.test(m)) return `нет связи с сервером (${err && err.name ? err.name + ': ' : ''}${m})`;
+    return m || 'неизвестная ошибка';
 };
 
-const askAi = async prompt => {
+const postServer = async body => {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), CONFIG.AI_TIMEOUT);
     try {
         const response = await fetch(CONFIG.AI_PROXY_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt }),
+            body: JSON.stringify(body),
             signal: ctrl.signal
         });
         if (!response.ok) throw new Error('http ' + response.status);
-        const data = await response.json();
-        return String(data.text || '');
+        return await response.json();
     } finally {
         clearTimeout(timer);
     }
 };
 
-/* Проверка ответа ИИ: год запуска берём из своей таблицы, сроки длиннее истории и
-   нереальные цифры обнуляем, чтобы выдумки модели не попадали в таблицу. */
-const sanitizeAi = (funds, parsed) => {
-    const now = new Date().getFullYear();
-    parsed.funds = parsed.funds.map((r, i) => {
-        const f = funds[i];
-        const hit = f && KNOWN_ASSETS.find(d => d.re.test(`${f.ticker} ${f.name}`));
-        const since = hit ? hit.since : r.since;
-        const returns = {};
-        CONFIG.AI_YEARS.forEach(y => {
-            const v = r.returns[y];
-            const tooLong = since && now - since < y;
-            returns[y] = v == null || tooLong || v < -30 || v > 60 ? null : v;
-        });
-        return { since, returns };
-    });
-    return parsed;
-};
-
 const compute = async () => {
     const funds = aiFunds();
+    if (!funds.length) { aiBody.innerHTML = '<div class="ai-msg">Сначала добавьте хотя бы одну инвестицию кнопкой +.</div>'; return; }
     const cacheKey = JSON.stringify(funds.map(f => [f.name, f.ticker, f.weight]));
     if (aiCache.key === cacheKey && aiCache.html) { aiBody.innerHTML = aiCache.html; return; }
 
     if (!CONFIG.AI_PROXY_URL) {
-        aiBody.innerHTML = `<div class="ai-msg err">ИИ не ответил: ${escapeHtml(aiReason(null))}.</div>`;
+        aiBody.innerHTML = `<div class="ai-msg err">Ошибка: ${escapeHtml(aiReason(null))}.</div>`;
         return;
     }
 
-    aiBody.innerHTML = '<div class="ai-msg">ИИ считает среднюю доходность…</div>';
+    aiBody.innerHTML = '<div class="ai-msg">Считаю доходность по реальным ценам…</div>';
     aiBtn.classList.add('busy');
-    let parsed = null, lastErr = null;
+
+    /* Цифры берутся только из реальных исторических цен (считает сервер), ИИ их не выдумывает. */
+    let data = {}, dataErr = null, review = null, aiErr = null;
     try {
-        parsed = sanitizeAi(funds, parseAi(await askAi(buildPrompt(funds)), funds.length));
+        data = (await postServer({ tickers: funds.map(f => f.ticker) })).data || {};
     } catch (err) {
-        lastErr = err;
+        dataErr = err;
+        console.warn('Data failed:', err);
+    }
+    try {
+        review = parseReview(String((await postServer({ prompt: buildPrompt(funds, data) })).text || ''));
+    } catch (err) {
+        aiErr = err;
         console.warn('AI failed:', err);
     }
     aiBtn.classList.remove('busy');
 
-    if (!parsed) {
-        aiBody.innerHTML = `<div class="ai-msg err">ИИ не ответил: ${escapeHtml(aiReason(lastErr))}. Нажмите «Ai» ещё раз.</div>`;
-        return;
-    }
+    const blank = () => ({ since: null, returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, null])) });
+    const parsed = {
+        funds: funds.map(f => {
+            const d = data[f.ticker];
+            return d ? { since: d.since, returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, d.returns[y] != null ? d.returns[y] : null])) } : blank();
+        }),
+        summary: review ? review.summary : '',
+        pros: review ? review.pros : [],
+        cons: review ? review.cons : [],
+        ideas: review ? review.ideas : [],
+        notes: []
+    };
+    if (dataErr) parsed.notes.push(`Данные о ценах недоступны: ${aiReason(dataErr)}.`);
+    else parsed.notes.push('Доходность посчитана по реальным историческим ценам с учётом дивидендов. ✕ значит, что данных по активу или сроку нет.');
+    if (aiErr) parsed.notes.push(`Комментарий ИИ недоступен: ${aiReason(aiErr)}.`);
 
     const html = renderAi(funds, parsed);
-    aiCache = { key: cacheKey, html };
+    if (!dataErr && !aiErr) aiCache = { key: cacheKey, html };
     aiBody.innerHTML = html;
 };
 
