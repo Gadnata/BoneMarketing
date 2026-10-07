@@ -84,6 +84,14 @@ canvas{position:absolute;z-index:4;width:100%;height:100%;cursor:pointer;touch-a
 .ai-table td.up{color:#30d158}
 .ai-table td.down{color:#ff453a}
 .ai-table td.na{color:rgba(255,255,255,.35);font-size:10px}
+.ai-table td.est{opacity:.5;font-style:italic}
+.ai-tools{display:flex;gap:6px}
+.ai-set{display:none;flex-direction:column;gap:6px;margin-bottom:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.05)}
+.ai-set.open{display:flex}
+.ai-set label{font-size:11px;color:rgba(255,255,255,.55)}
+.ai-set input{width:100%;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#0b0b0b;color:#fff;font-size:12px;outline:none;user-select:text;-webkit-user-select:text}
+.ai-set button{align-self:flex-start;margin-top:4px;padding:7px 16px;border-radius:14px;border:0;background:#fff;color:#000;font-size:12px;font-weight:600;cursor:pointer}
+.ai-set .hint{font-size:10px;color:rgba(255,255,255,.4);line-height:1.4}
 .ai-table tr.total td{font-weight:700;border-top:1px solid rgba(255,255,255,.2);border-bottom:0}
 .ai-fund{display:flex;align-items:center;gap:6px;min-width:0}
 .ai-fund>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -147,7 +155,15 @@ canvas{position:absolute;z-index:4;width:100%;height:100%;cursor:pointer;touch-a
 </div>
 
 <div class="ai-panel" id="aiPanel" role="dialog" aria-label="ИИ-анализ доходности">
-    <div class="ai-head"><span>Средняя доходность, % в год</span><button class="ai-close" id="aiClose" aria-label="Закрыть">✕</button></div>
+    <div class="ai-head"><span>Средняя доходность, % в год</span><span class="ai-tools"><button class="ai-close" id="aiGear" aria-label="Настройки" title="Настройки">⚙</button><button class="ai-close" id="aiClose" aria-label="Закрыть">✕</button></span></div>
+    <div class="ai-set" id="aiSet">
+        <label for="setUrl">Адрес Apps Script (оканчивается на /exec)</label>
+        <input id="setUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" spellcheck="false">
+        <label for="setKey">Ключ Google (Gemini) API</label>
+        <input id="setKey" type="password" placeholder="AIza…" autocomplete="off" spellcheck="false">
+        <button id="setSave">Сохранить</button>
+        <div class="hint">Всё хранится только в этом браузере. Ключ уходит в ваш скрипт Google и дальше к Gemini, поэтому VPN не нужен.</div>
+    </div>
     <div id="aiBody"></div>
 </div>
 <button class="ai-btn" id="aiBtn">Ai</button>
@@ -171,8 +187,9 @@ const CONFIG = {
     // Насколько цифры линейки растут на телефоне (0 = не растут, 1 = как текст в кусках, больше 1 = ещё крупнее)
     SCALE_TEXT_BOOST: 1.7,
 
-    // ИИ работает через ваш Cloudflare Worker (см. worker.js). Без адреса показывается встроенная офлайн-оценка.
-    AI_PROXY_URL: 'https://investai.invest-ai.workers.dev',
+    // Адрес вашего Google Apps Script (Code.gs, развёрнутый как веб-приложение). Заканчивается на /exec.
+    // Работает без VPN: браузер ходит только на script.google.com, а к котировкам и Gemini обращается сервер Google.
+    AI_PROXY_URL: '',
     AI_TIMEOUT: 45000,
     // Минимальная доля портфеля с данными, при которой строка «Портфель» вообще показывается.
     MIN_COVER: 50,
@@ -667,6 +684,19 @@ const aiBody = $('aiBody');
 const aiBtn = $('aiBtn');
 let aiCache = { key: '', html: '' };
 
+/* Адрес скрипта и ключ вводятся на сайте и запоминаются в браузере. */
+const LS_URL = 'bone-proxy-url', LS_KEY = 'bone-gemini-key';
+const lsGet = k => { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+const proxyUrl = () => lsGet(LS_URL) || CONFIG.AI_PROXY_URL;
+const geminiKey = () => lsGet(LS_KEY);
+const aiSet = $('aiSet');
+const openSet = () => {
+    $('setUrl').value = proxyUrl();
+    $('setKey').value = geminiKey();
+    aiSet.classList.add('open');
+};
+
 const aiFunds = () => {
     const sum = totalWeight();
     return items.filter(x => x.enabled && !x.ph).map(x => ({
@@ -687,7 +717,7 @@ const buildPrompt = (funds, data) => `Ты финансовый аналитик
 Позиции:
 ${funds.map((f, i) => {
     const d = data && data[f.ticker];
-    const facts = d ? `, данные с ${d.since} года, среднегодовая доходность: ${CONFIG.AI_YEARS.filter(y => d.returns[y] != null).map(y => `${y} л. ${d.returns[y]}%`).join(', ') || 'нет'}` : ', данных о доходности нет';
+    const facts = d ? `, данные с ${d.since} года, среднегодовая доходность по цене без дивидендов: ${CONFIG.AI_YEARS.filter(y => d.returns[y] != null && !(d.full || []).includes(y)).map(y => `${y} л. ${d.returns[y]}%`).join(', ') || 'нет'}${d.all ? `; за всю историю (${d.all.years} л.) ${d.all.cagr}%` : ''}` : ', данных о доходности нет';
     return `${i + 1}. ${f.name} (${f.ticker}), доля ${f.weight}%${facts}`;
 }).join('\n')}
 
@@ -712,12 +742,10 @@ const parseReview = text => {
 };
 
 const fmtNum = v => (v > 0 ? '+' : '') + v.toFixed(1).replace('.', ',');
-const cell = v => v == null
-    ? '<td class="na">✕</td>'
-    : `<td class="${v >= 0 ? 'up' : 'down'}">${fmtNum(v)}</td>`;
-const totalCell = t => t == null
-    ? '<td class="na">✕</td>'
-    : `<td class="${t.v >= 0 ? 'up' : 'down'}"${t.partial ? ` title="Учтено ${Math.round(t.cover * 10) / 10}% портфеля, остальное распределено пропорционально"` : ''}>${fmtNum(t.v)}${t.partial ? '<sup>*</sup>' : ''}</td>`;
+const cell = (v, est) => v == null
+    ? '<td class="na">—</td>'
+    : `<td class="${v >= 0 ? 'up' : 'down'}${est ? ' est' : ''}">${fmtNum(v)}</td>`;
+const totalCell = t => t == null ? cell(null) : cell(t.v, t.est);
 
 const subLine = (f, r) => r.since ? `<span class="ai-sub">с ${r.since}</span>` : '';
 
@@ -727,24 +755,25 @@ const renderAi = (funds, parsed) => {
     const head = `<tr><th>Фонд</th>${years.map(y => `<th>${y}л</th>`).join('')}</tr>`;
     const rows = funds.map((f, i) => {
         const r = res[i];
-        return `<tr><td><span class="ai-fund"><i style="background:${f.color}"></i><span>${escapeHtml(f.ticker || f.name)}${subLine(f, r)}</span></span></td>${years.map(y => cell(r.returns[y])).join('')}</tr>`;
+        return `<tr><td><span class="ai-fund"><i style="background:${f.color}"></i><span>${escapeHtml(f.ticker || f.name)}${subLine(f, r)}</span></span></td>${years.map(y => cell(r.returns[y], r.est.includes(y))).join('')}</tr>`;
     }).join('');
 
-    /* Если у позиции нет данных за срок, её доля делится между остальными
-       пропорционально их долям: считаем средневзвешенное по тем, что есть. */
-    let anyPartial = false;
+    /* Портфель: средневзвешенное по тем позициям, у которых есть число; веса пересчитываются на их сумму. */
+    let anyEst = false;
     const total = years.map(y => {
-        let acc = 0, w = 0, missing = false;
+        let acc = 0, w = 0, est = false;
         for (let i = 0; i < funds.length; i++) {
             const v = res[i].returns[y];
-            if (v == null) { missing = true; continue; }
+            if (v == null) continue;
             acc += v * funds[i].weight;
             w += funds[i].weight;
+            if (res[i].est.includes(y)) est = true;
         }
         if (w < CONFIG.MIN_COVER) return null;
-        if (missing) anyPartial = true;
-        return { v: acc / w, partial: missing, cover: w };
+        if (est) anyEst = true;
+        return { v: acc / w, est };
     });
+    const noData = funds.filter((f, i) => CONFIG.AI_YEARS.every(y => res[i].returns[y] == null)).map(f => f.ticker || f.name);
     const totalRow = `<tr class="total"><td>Портфель</td>${total.map(totalCell).join('')}</tr>`;
 
     const block = (title, cls, arr) => arr.length
@@ -752,12 +781,14 @@ const renderAi = (funds, parsed) => {
         : '';
 
     return `<div class="ai-scroll"><table class="ai-table">${head}${rows}${totalRow}</table></div>
-        <div class="ai-review">${parsed.summary ? `<p>${escapeHtml(parsed.summary)}</p>` : ''}${block('Плюсы', 'pros', parsed.pros)}${block('Минусы', 'cons', parsed.cons)}${block('Что попробовать или изменить', 'ideas', parsed.ideas)}</div>${(parsed.notes || []).map(n => `<div class="ai-src">${escapeHtml(n)}</div>`).join('')}<div class="ai-src">Портфель: средневзвешенное по долям (приближённо, без учёта ребалансировки).${anyPartial ? ` * Для сроков, где у части позиций нет данных (✕), их доля распределена между остальными пропорционально. Если данных меньше чем по ${CONFIG.MIN_COVER}% портфеля, итог не показывается.` : ''}</div>`;
+        <div class="ai-review">${parsed.summary ? `<p>${escapeHtml(parsed.summary)}</p>` : ''}${block('Плюсы', 'pros', parsed.pros)}${block('Минусы', 'cons', parsed.cons)}${block('Что попробовать или изменить', 'ideas', parsed.ideas)}</div>${(parsed.notes || []).map(n => `<div class="ai-src">${escapeHtml(n)}</div>`).join('')}<div class="ai-src">Портфель: средневзвешенное по долям (приближённо, без учёта ребалансировки).${anyEst ? ' Бледным курсивом выделены сроки, где истории актива меньше: взята среднегодовая доходность за весь доступный период.' : ''}${noData.length ? ` Нет данных по: ${escapeHtml(noData.join(', '))}.` : ''}</div>`;
 };
 
 const aiReason = err => {
     const m = String(err && err.message || err || '');
-    if (!CONFIG.AI_PROXY_URL) return 'не указан адрес сервера ИИ';
+    if (!proxyUrl()) return 'не указан адрес Apps Script (кнопка ⚙)';
+    if (/no key/.test(m)) return 'добавьте ключ Gemini в настройках (⚙)';
+    if (/API key|API_KEY|http 400/i.test(m)) return 'ключ Gemini не принят, проверьте его в настройках (⚙)';
     if (err && err.name === 'AbortError') return 'истекло время ожидания';
     if (/http 429/.test(m)) return 'исчерпан дневной лимит, попробуйте позже';
     if (/http 5\d\d|http 403/.test(m)) return 'сервер недоступен или отклонил запрос';
@@ -770,14 +801,17 @@ const postServer = async body => {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), CONFIG.AI_TIMEOUT);
     try {
-        const response = await fetch(CONFIG.AI_PROXY_URL, {
+        /* text/plain: «простой» запрос без preflight, Apps Script его принимает. */
+        const response = await fetch(proxyUrl(), {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(body),
             signal: ctrl.signal
         });
         if (!response.ok) throw new Error('http ' + response.status);
-        return await response.json();
+        const json = await response.json();
+        if (json.error) throw new Error(json.error);
+        return json;
     } finally {
         clearTimeout(timer);
     }
@@ -789,8 +823,9 @@ const compute = async () => {
     const cacheKey = JSON.stringify(funds.map(f => [f.name, f.ticker, f.weight]));
     if (aiCache.key === cacheKey && aiCache.html) { aiBody.innerHTML = aiCache.html; return; }
 
-    if (!CONFIG.AI_PROXY_URL) {
-        aiBody.innerHTML = `<div class="ai-msg err">Ошибка: ${escapeHtml(aiReason(null))}.</div>`;
+    if (!proxyUrl()) {
+        openSet();
+        aiBody.innerHTML = '<div class="ai-msg">Вставьте адрес Apps Script и ключ Gemini выше и нажмите «Сохранить». Они запомнятся в браузере.</div>';
         return;
     }
 
@@ -805,19 +840,23 @@ const compute = async () => {
         dataErr = err;
         console.warn('Data failed:', err);
     }
-    try {
-        review = parseReview(String((await postServer({ prompt: buildPrompt(funds, data) })).text || ''));
-    } catch (err) {
-        aiErr = err;
-        console.warn('AI failed:', err);
+    if (!geminiKey()) {
+        aiErr = new Error('no key');
+    } else {
+        try {
+            review = parseReview(String((await postServer({ prompt: buildPrompt(funds, data), key: geminiKey() })).text || ''));
+        } catch (err) {
+            aiErr = err;
+            console.warn('AI failed:', err);
+        }
     }
     aiBtn.classList.remove('busy');
 
-    const blank = () => ({ since: null, returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, null])) });
+    const blank = () => ({ since: null, est: [], returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, null])) });
     const parsed = {
         funds: funds.map(f => {
             const d = data[f.ticker];
-            return d ? { since: d.since, returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, d.returns[y] != null ? d.returns[y] : null])) } : blank();
+            return d ? { since: d.since, est: d.full || [], returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, d.returns[y] != null ? d.returns[y] : null])) } : blank();
         }),
         summary: review ? review.summary : '',
         pros: review ? review.pros : [],
@@ -826,7 +865,7 @@ const compute = async () => {
         notes: []
     };
     if (dataErr) parsed.notes.push(`Данные о ценах недоступны: ${aiReason(dataErr)}.`);
-    else parsed.notes.push('Доходность посчитана по реальным историческим ценам с учётом дивидендов. ✕ значит, что данных по активу или сроку нет.');
+    else parsed.notes.push('Среднегодовая доходность (CAGR) по реальным ценам закрытия Google Finance, на точные даты. Дивиденды не учтены: только изменение цены. «—» значит, что данных нет.');
     if (aiErr) parsed.notes.push(`Комментарий ИИ недоступен: ${aiReason(aiErr)}.`);
 
     const html = renderAi(funds, parsed);
@@ -839,6 +878,20 @@ const runAi = () => {
     openAi();
     compute();
 };
+
+$('aiGear').addEventListener('click', () => {
+    if (aiSet.classList.contains('open')) aiSet.classList.remove('open'); else openSet();
+});
+$('setSave').addEventListener('click', () => {
+    const url = $('setUrl').value.trim();
+    if (url && !/^https:\/\/script\.google\.com\/.+\/exec/.test(url)) { toast('Адрес должен начинаться с https://script.google.com и заканчиваться на /exec'); return; }
+    lsSet(LS_URL, url);
+    lsSet(LS_KEY, $('setKey').value.trim());
+    aiCache = { key: '', html: '' };
+    aiSet.classList.remove('open');
+    toast('Сохранено');
+    compute();
+});
 
 aiBtn.addEventListener('click', runAi);
 $('aiClose').addEventListener('click', closeAi);
