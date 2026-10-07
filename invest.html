@@ -91,6 +91,7 @@ canvas{position:absolute;z-index:4;width:100%;height:100%;cursor:pointer;touch-a
 .ai-set label{font-size:11px;color:rgba(255,255,255,.55)}
 .ai-set input{width:100%;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#0b0b0b;color:#fff;font-size:12px;outline:none;user-select:text;-webkit-user-select:text}
 .ai-set button{align-self:flex-start;margin-top:4px;padding:7px 16px;border-radius:14px;border:0;background:#fff;color:#000;font-size:12px;font-weight:600;cursor:pointer}
+.ai-set .getkey{font-size:12px;color:#64d2ff;text-decoration:none}
 .ai-set .hint{font-size:10px;color:rgba(255,255,255,.4);line-height:1.4}
 .ai-table tr.total td{font-weight:700;border-top:1px solid rgba(255,255,255,.2);border-bottom:0}
 .ai-fund{display:flex;align-items:center;gap:6px;min-width:0}
@@ -157,12 +158,11 @@ canvas{position:absolute;z-index:4;width:100%;height:100%;cursor:pointer;touch-a
 <div class="ai-panel" id="aiPanel" role="dialog" aria-label="ИИ-анализ доходности">
     <div class="ai-head"><span>Средняя доходность, % в год</span><span class="ai-tools"><button class="ai-close" id="aiGear" aria-label="Настройки" title="Настройки">⚙</button><button class="ai-close" id="aiClose" aria-label="Закрыть">✕</button></span></div>
     <div class="ai-set" id="aiSet">
-        <label for="setUrl">Адрес Apps Script (оканчивается на /exec)</label>
-        <input id="setUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" spellcheck="false">
         <label for="setKey">Ключ Google (Gemini) API</label>
         <input id="setKey" type="password" placeholder="AIza…" autocomplete="off" spellcheck="false">
+        <a class="getkey" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Получить ключ Gemini →</a>
         <button id="setSave">Сохранить</button>
-        <div class="hint">Всё хранится только в этом браузере. Ключ уходит в ваш скрипт Google и дальше к Gemini, поэтому VPN не нужен.</div>
+        <div class="hint">Ключ хранится только в этом браузере и уходит в ваш скрипт Google, а он обращается к Gemini. Для самого ключа VPN нужен один раз, чтобы его получить.</div>
     </div>
     <div id="aiBody"></div>
 </div>
@@ -187,9 +187,9 @@ const CONFIG = {
     // Насколько цифры линейки растут на телефоне (0 = не растут, 1 = как текст в кусках, больше 1 = ещё крупнее)
     SCALE_TEXT_BOOST: 1.7,
 
-    // Адрес вашего Google Apps Script (Code.gs, развёрнутый как веб-приложение). Заканчивается на /exec.
+    // Адрес вашего Google Apps Script (VPN.gs, развёрнутый как веб-приложение). Вставьте один раз здесь. Заканчивается на /exec.
     // Работает без VPN: браузер ходит только на script.google.com, а к котировкам и Gemini обращается сервер Google.
-    AI_PROXY_URL: 'https://script.google.com/macros/s/AKfycbwWwa5om1U7dxaj5D8iOq3Hq0UCtHbco7ZTCJgopPEH5EVX-9BFoRNfa9YRLf2wO2Qv/exec',
+    AI_PROXY_URL: '',
     AI_TIMEOUT: 45000,
     // Минимальная доля портфеля с данными, при которой строка «Портфель» вообще показывается.
     MIN_COVER: 50,
@@ -685,14 +685,13 @@ const aiBtn = $('aiBtn');
 let aiCache = { key: '', html: '' };
 
 /* Адрес скрипта и ключ вводятся на сайте и запоминаются в браузере. */
-const LS_URL = 'bone-proxy-url', LS_KEY = 'bone-gemini-key';
+const LS_KEY = 'bone-gemini-key';
 const lsGet = k => { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
-const proxyUrl = () => lsGet(LS_URL) || CONFIG.AI_PROXY_URL;
+const proxyUrl = () => CONFIG.AI_PROXY_URL;
 const geminiKey = () => lsGet(LS_KEY);
 const aiSet = $('aiSet');
 const openSet = () => {
-    $('setUrl').value = proxyUrl();
     $('setKey').value = geminiKey();
     aiSet.classList.add('open');
 };
@@ -786,7 +785,7 @@ const renderAi = (funds, parsed) => {
 
 const aiReason = err => {
     const m = String(err && err.message || err || '');
-    if (!proxyUrl()) return 'не указан адрес Apps Script (кнопка ⚙)';
+    if (!proxyUrl()) return 'в коде не указан адрес скрипта (CONFIG.AI_PROXY_URL)';
     if (/no key/.test(m)) return 'добавьте ключ Gemini в настройках (⚙)';
     if (/API key|API_KEY|http 400/i.test(m)) return 'ключ Gemini не принят, проверьте его в настройках (⚙)';
     if (err && err.name === 'AbortError') return 'истекло время ожидания';
@@ -824,8 +823,7 @@ const compute = async () => {
     if (aiCache.key === cacheKey && aiCache.html) { aiBody.innerHTML = aiCache.html; return; }
 
     if (!proxyUrl()) {
-        openSet();
-        aiBody.innerHTML = '<div class="ai-msg">Вставьте адрес Apps Script и ключ Gemini выше и нажмите «Сохранить». Они запомнятся в браузере.</div>';
+        aiBody.innerHTML = '<div class="ai-msg err">В коде страницы не указан адрес скрипта: вставьте его в CONFIG.AI_PROXY_URL (адрес вида https://script.google.com/macros/s/…/exec).</div>';
         return;
     }
 
@@ -833,9 +831,11 @@ const compute = async () => {
     aiBtn.classList.add('busy');
 
     /* Цифры берутся только из реальных исторических цен (считает сервер), ИИ их не выдумывает. */
-    let data = {}, dataErr = null, review = null, aiErr = null;
+    let data = {}, dataErrs = {}, dataErr = null, review = null, aiErr = null;
     try {
-        data = (await postServer({ tickers: funds.map(f => f.ticker) })).data || {};
+        const resp = await postServer({ tickers: funds.map(f => f.ticker) });
+        data = resp.data || {};
+        dataErrs = resp.errors || {};
     } catch (err) {
         dataErr = err;
         console.warn('Data failed:', err);
@@ -865,7 +865,8 @@ const compute = async () => {
         notes: []
     };
     if (dataErr) parsed.notes.push(`Данные о ценах недоступны: ${aiReason(dataErr)}.`);
-    else parsed.notes.push('Среднегодовая доходность (CAGR) по реальным ценам закрытия Google Finance, на точные даты. Дивиденды не учтены: только изменение цены. «—» значит, что данных нет.');
+    else parsed.notes.push('Среднегодовая доходность (CAGR) по реальным историческим ценам на точные даты, с учётом дивидендов (источник Yahoo Finance). «—» значит, что данных нет.');
+    Object.keys(dataErrs).forEach(t => parsed.notes.push(`Нет данных по ${t}: ${dataErrs[t]}.`));
     if (aiErr) parsed.notes.push(`Комментарий ИИ недоступен: ${aiReason(aiErr)}.`);
 
     const html = renderAi(funds, parsed);
@@ -876,6 +877,7 @@ const compute = async () => {
 const runAi = () => {
     if (aiPanel.classList.contains('open')) { closeAi(); return; }
     openAi();
+    if (!geminiKey()) openSet();
     compute();
 };
 
@@ -883,9 +885,6 @@ $('aiGear').addEventListener('click', () => {
     if (aiSet.classList.contains('open')) aiSet.classList.remove('open'); else openSet();
 });
 $('setSave').addEventListener('click', () => {
-    const url = $('setUrl').value.trim();
-    if (url && !/^https:\/\/script\.google\.com\/.+\/exec/.test(url)) { toast('Адрес должен начинаться с https://script.google.com и заканчиваться на /exec'); return; }
-    lsSet(LS_URL, url);
     lsSet(LS_KEY, $('setKey').value.trim());
     aiCache = { key: '', html: '' };
     aiSet.classList.remove('open');
