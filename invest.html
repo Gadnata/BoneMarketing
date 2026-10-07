@@ -6,7 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Портфель">
+<meta name="apple-mobile-web-app-title" content="BoneInvest">
+<meta name="application-name" content="BoneInvest">
 <meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -678,6 +679,9 @@ const buildPrompt = funds => `Ты финансовый аналитик. Для
 3. Если базового актива не существовало за весь срок (он появился позже), ставь null для этого срока. Не подставляй индексы или аналоги.
 4. since: год, с которого существует базовый актив (число) или null.
 5. Округляй до 0.1. Если оценить честно нельзя, ставь null.
+6. Сейчас ${new Date().getFullYear()} год. Срок в N лет возможен, только если актив существовал N лет назад. Иначе ставь null. Никогда не растягивай историю дальше года запуска.
+7. Если не уверен в цифре, ставь null. Лучше null, чем выдумка. Не придумывай историю для платформ и неликвидных активов: RealT (токенизированная недвижимость) существует с 2019 года, USDY с 2023 года.
+8. Известные годы запуска базовых активов: XLP, XLV, XLU (сектора S&P 500) с 1998, ETF на TIPS (TIP) с 2003.
 
 Позиции:
 ${funds.map((f, i) => `${i + 1}. ${f.name} (${f.ticker}), доля ${f.weight}%`).join('\n')}
@@ -834,6 +838,25 @@ const askAi = async prompt => {
     }
 };
 
+/* Проверка ответа ИИ: год запуска берём из своей таблицы, сроки длиннее истории и
+   нереальные цифры обнуляем, чтобы выдумки модели не попадали в таблицу. */
+const sanitizeAi = (funds, parsed) => {
+    const now = new Date().getFullYear();
+    parsed.funds = parsed.funds.map((r, i) => {
+        const f = funds[i];
+        const hit = f && OFFLINE_DB.find(d => d.re.test(`${f.ticker} ${f.name}`));
+        const since = hit ? hit.since : r.since;
+        const returns = {};
+        CONFIG.AI_YEARS.forEach(y => {
+            const v = r.returns[y];
+            const tooLong = since && now - since < y;
+            returns[y] = v == null || tooLong || v < -30 || v > 60 ? null : v;
+        });
+        return { since, returns };
+    });
+    return parsed;
+};
+
 const compute = async () => {
     const funds = aiFunds();
     const cacheKey = JSON.stringify(funds.map(f => [f.name, f.ticker, f.weight]));
@@ -844,7 +867,7 @@ const compute = async () => {
         aiBody.innerHTML = '<div class="ai-msg">ИИ считает среднюю доходность…</div>';
         aiBtn.classList.add('busy');
         try {
-            parsed = parseAi(await askAi(buildPrompt(funds)), funds.length);
+            parsed = sanitizeAi(funds, parseAi(await askAi(buildPrompt(funds)), funds.length));
         } catch (err) {
             lastErr = err;
             console.warn('AI failed:', err);
