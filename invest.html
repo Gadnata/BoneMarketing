@@ -191,6 +191,7 @@ const CONFIG = {
     // Работает без VPN: браузер ходит только на script.google.com, а к котировкам и Gemini обращается сервер Google.
     AI_PROXY_URL: 'https://script.google.com/macros/s/AKfycbwWwa5om1U7dxaj5D8iOq3Hq0UCtHbco7ZTCJgopPEH5EVX-9BFoRNfa9YRLf2wO2Qv/exec',
     AI_TIMEOUT: 45000,
+    DATA_TIMEOUT: 240000,   // поиск цен с перепроверкой занимает до нескольких минут
     // Минимальная доля портфеля с данными, при которой строка «Портфель» вообще показывается.
     MIN_COVER: 50,
     AI_YEARS: [1, 3, 5, 10, 20, 30, 40, 50, 80, 100]
@@ -780,14 +781,14 @@ const renderAi = (funds, parsed) => {
         : '';
 
     return `<div class="ai-scroll"><table class="ai-table">${head}${rows}${totalRow}</table></div>
-        <div class="ai-review">${parsed.summary ? `<p>${escapeHtml(parsed.summary)}</p>` : ''}${block('Плюсы', 'pros', parsed.pros)}${block('Минусы', 'cons', parsed.cons)}${block('Что попробовать или изменить', 'ideas', parsed.ideas)}</div>${(parsed.notes || []).map(n => `<div class="ai-src">${escapeHtml(n)}</div>`).join('')}<div class="ai-src">Портфель: средневзвешенное по долям (приближённо, без учёта ребалансировки).${anyEst ? ' Бледнее выделены сроки, где истории актива меньше: взята среднегодовая доходность за весь доступный период.' : ''}${noData.length ? ` Нет данных по: ${escapeHtml(noData.join(', '))}.` : ''}</div>`;
+        <div class="ai-review">${parsed.summary ? `<p>${escapeHtml(parsed.summary)}</p>` : ''}${block('Плюсы', 'pros', parsed.pros)}${block('Минусы', 'cons', parsed.cons)}${block('Что попробовать или изменить', 'ideas', parsed.ideas)}</div>${(parsed.notes || []).map(n => `<div class="ai-src">${escapeHtml(n)}</div>`).join('')}<div class="ai-src">Портфель: средневзвешенное по долям (приближённо, без учёта ребалансировки).${anyEst ? ' Бледнее выделены цифры, которые не подтвердились проверкой, и сроки, где истории актива меньше: для них взята среднегодовая доходность за весь доступный период.' : ''}${noData.length ? ` Нет данных по: ${escapeHtml(noData.join(', '))}.` : ''}</div>`;
 };
 
 const aiReason = err => {
     const m = String(err && err.message || err || '');
     if (!proxyUrl()) return 'в коде не указан адрес скрипта (CONFIG.AI_PROXY_URL)';
     if (/no key/.test(m)) return 'добавьте ключ Gemini в настройках (⚙)';
-    if (/API key|API_KEY|http 400/i.test(m)) return 'ключ Gemini не принят, проверьте его в настройках (⚙)';
+    if (/API key|API_KEY|http 400/i.test(m)) return 'ключ Gemini не принят, проверьте его в настройках (⚙). Ответ Google: ' + m.replace(/\s+/g, ' ').slice(0, 140);
     if (err && err.name === 'AbortError') return 'истекло время ожидания';
     if (/http 429/.test(m)) return 'исчерпан дневной лимит, попробуйте позже';
     if (/http 5\d\d|http 403/.test(m)) return 'сервер недоступен или отклонил запрос';
@@ -796,9 +797,9 @@ const aiReason = err => {
     return m || 'неизвестная ошибка';
 };
 
-const postServer = async body => {
+const postServer = async (body, timeout = CONFIG.AI_TIMEOUT) => {
     const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), CONFIG.AI_TIMEOUT);
+    const timer = setTimeout(() => ctrl.abort(), timeout);
     try {
         /* text/plain: «простой» запрос без preflight, Apps Script его принимает. */
         const response = await fetch(proxyUrl(), {
@@ -827,18 +828,22 @@ const compute = async () => {
         return;
     }
 
-    aiBody.innerHTML = '<div class="ai-msg">Считаю доходность по реальным ценам…</div>';
+    aiBody.innerHTML = '<div class="ai-msg">Ищу среднегодовую доходность через поиск Google и перепроверяю тремя независимыми поисками. Это может занять до пары минут, потом результат запомнится на сутки…</div>';
     aiBtn.classList.add('busy');
 
     /* Цифры берутся только из реальных исторических цен (считает сервер), ИИ их не выдумывает. */
     let data = {}, dataErrs = {}, dataErr = null, review = null, aiErr = null;
-    try {
-        const resp = await postServer({ tickers: funds.map(f => f.ticker) });
-        data = resp.data || {};
-        dataErrs = resp.errors || {};
-    } catch (err) {
-        dataErr = err;
-        console.warn('Data failed:', err);
+    if (!geminiKey()) {
+        dataErr = new Error('no key');
+    } else {
+        try {
+            const resp = await postServer({ tickers: funds.map(f => f.ticker), names: funds.map(f => f.name), key: geminiKey() }, CONFIG.DATA_TIMEOUT);
+            data = resp.data || {};
+            dataErrs = resp.errors || {};
+        } catch (err) {
+            dataErr = err;
+            console.warn('Data failed:', err);
+        }
     }
     if (!geminiKey()) {
         aiErr = new Error('no key');
@@ -856,7 +861,7 @@ const compute = async () => {
     const parsed = {
         funds: funds.map(f => {
             const d = data[f.ticker];
-            return d ? { since: d.since, est: d.full || [], returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, d.returns[y] != null ? d.returns[y] : null])) } : blank();
+            return d ? { since: d.since, est: d.conf === 'low' ? CONFIG.AI_YEARS.slice() : (d.full || []), returns: Object.fromEntries(CONFIG.AI_YEARS.map(y => [y, d.returns[y] != null ? d.returns[y] : null])) } : blank();
         }),
         summary: review ? review.summary : '',
         pros: review ? review.pros : [],
@@ -865,7 +870,13 @@ const compute = async () => {
         notes: []
     };
     if (dataErr) parsed.notes.push(`Данные о ценах недоступны: ${aiReason(dataErr)}.`);
-    else parsed.notes.push('Среднегодовая доходность (CAGR) по реальным историческим ценам на точные даты, с учётом дивидендов (источник Yahoo Finance). «—» значит, что данных нет.');
+    else parsed.notes.push('Среднегодовая доходность в % за год ищет поиск Google. Каждый актив проверяют три независимых поиска, берётся медиана. «—» значит, что данных нет.');
+    funds.forEach(f => {
+        const d = data[f.ticker];
+        if (!d) return;
+        const level = d.conf === 'high' ? 'подтверждено' : d.conf === 'medium' ? 'подтверждено с небольшим разбросом' : 'НЕ подтверждено, цифры приблизительные';
+        parsed.notes.push(`${f.ticker}: ${d.runs} из 3 поисков, разброс до ${String(d.spread).replace('.', ',')} п.п., ${level}${d.sources && d.sources.length ? ' (' + d.sources.join(', ') + ')' : ''}.`);
+    });
     Object.keys(dataErrs).forEach(t => parsed.notes.push(`Нет данных по ${t}: ${dataErrs[t]}.`));
     if (aiErr) parsed.notes.push(`Комментарий ИИ недоступен: ${aiReason(aiErr)}.`);
 
