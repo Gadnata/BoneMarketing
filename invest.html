@@ -191,7 +191,7 @@ const CONFIG = {
     // Работает без VPN: браузер ходит только на script.google.com, а к котировкам и Gemini обращается сервер Google.
     AI_PROXY_URL: 'https://script.google.com/macros/s/AKfycbwWwa5om1U7dxaj5D8iOq3Hq0UCtHbco7ZTCJgopPEH5EVX-9BFoRNfa9YRLf2wO2Qv/exec',
     AI_TIMEOUT: 45000,
-    DATA_TIMEOUT: 240000,   // поиск цен с перепроверкой занимает до нескольких минут
+    DATA_TIMEOUT: 200000,   // поиск цен с перепроверкой занимает до нескольких минут
     // Минимальная доля портфеля с данными, при которой строка «Портфель» вообще показывается.
     MIN_COVER: 50,
     AI_YEARS: [1, 3, 5, 10, 20, 30, 40, 50, 80, 100]
@@ -828,22 +828,33 @@ const compute = async () => {
         return;
     }
 
-    aiBody.innerHTML = '<div class="ai-msg">Ищу среднегодовую доходность через поиск Google и перепроверяю тремя независимыми поисками. Это может занять до пары минут, потом результат запомнится на сутки…</div>';
+    aiBody.innerHTML = '<div class="ai-msg">Считаю среднегодовую доходность по историческим ценам. Если цен нет, ищу через Google с перепроверкой, это до пары минут…</div>';
     aiBtn.classList.add('busy');
 
     /* Цифры берутся только из реальных исторических цен (считает сервер), ИИ их не выдумывает. */
     let data = {}, dataErrs = {}, dataErr = null, review = null, aiErr = null;
-    if (!geminiKey()) {
-        dataErr = new Error('no key');
-    } else {
-        try {
-            const resp = await postServer({ tickers: funds.map(f => f.ticker), names: funds.map(f => f.name), key: geminiKey() }, CONFIG.DATA_TIMEOUT);
-            data = resp.data || {};
-            dataErrs = resp.errors || {};
-        } catch (err) {
-            dataErr = err;
-            console.warn('Data failed:', err);
-        }
+    {
+        /* Каждый актив ищется отдельным запросом, все идут параллельно: быстрее, и одна ошибка не ломает остальные. */
+        const t0 = Date.now();
+        const tick = setInterval(() => {
+            const el = aiBody.querySelector('.ai-msg');
+            if (el) el.textContent = `Считаю среднегодовую доходность по историческим ценам (Yahoo Finance и др.). Если цен нет, ищу через Google с перепроверкой, это до пары минут (прошло ${Math.round((Date.now() - t0) / 1000)} с), потом результат запомнится на сутки…`;
+        }, 1000);
+        const results = await Promise.allSettled(funds.map(f =>
+            postServer({ tickers: [f.ticker], names: [f.name], key: geminiKey() }, CONFIG.DATA_TIMEOUT)));
+        clearInterval(tick);
+        const failed = [];
+        results.forEach((r, i) => {
+            if (r.status === 'fulfilled') {
+                Object.assign(data, r.value.data || {});
+                Object.assign(dataErrs, r.value.errors || {});
+            } else {
+                failed.push(r.reason);
+                dataErrs[funds[i].ticker] = aiReason(r.reason);
+            }
+        });
+        if (failed.length === funds.length) { dataErr = failed[0]; dataErrs = {}; console.warn('Data failed:', dataErr); }
+        aiBody.innerHTML = '<div class="ai-msg">Готовлю комментарий ИИ…</div>';
     }
     if (!geminiKey()) {
         aiErr = new Error('no key');
@@ -870,10 +881,11 @@ const compute = async () => {
         notes: []
     };
     if (dataErr) parsed.notes.push(`Данные о ценах недоступны: ${aiReason(dataErr)}.`);
-    else parsed.notes.push('Среднегодовая доходность в % за год ищет поиск Google. Каждый актив проверяют три независимых поиска, берётся медиана. «—» значит, что данных нет.');
+    else parsed.notes.push('Среднегодовая доходность в % за год (CAGR) по историческим ценам на точные даты. Если цен нет в открытых источниках, значение ищет поиск Google с перепроверкой. «—» значит, что данных нет.');
     funds.forEach(f => {
         const d = data[f.ticker];
         if (!d) return;
+        if (d.conf === 'exact') { parsed.notes.push(`${f.ticker}: рассчитано точно по историческим ценам (${(d.sources || []).join(', ')}${d.adj ? ', с учётом дивидендов' : ', без дивидендов'}).`); return; }
         const level = d.conf === 'high' ? 'подтверждено' : d.conf === 'medium' ? 'подтверждено с небольшим разбросом' : 'НЕ подтверждено, цифры приблизительные';
         parsed.notes.push(`${f.ticker}: ${d.runs} из 3 поисков, разброс до ${String(d.spread).replace('.', ',')} п.п., ${level}${d.sources && d.sources.length ? ' (' + d.sources.join(', ') + ')' : ''}.`);
     });
