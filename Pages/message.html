@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BoneMarketing - CUSTOM MUSIC MARKETING</title>
+  <link rel="icon" type="image/png" href="../Content/Images/logo.png">
+
+  <link rel="stylesheet" href="../Styles/style_password,message.css">
+  <script src="../script.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Фон: графитовые круги -->
+  <div class="bg-glow-container">
+    <div class="glow-circle circle-1"></div>
+    <div class="glow-circle circle-2"></div>
+    <div class="glow-circle circle-3"></div>
+  </div>
+
+
+  <nav class="navbar">
+    <div class="navbar-container">
+
+      <a href="#"><img src="../Content/Images/logo_text.PNG" class="logo"></a>
+
+    </div>
+  </nav>
+
+  <main class="hero hero--message">
+    <div class="hero-center hero-center--message">
+
+      <h1 class="main-title">OPENING SOON</h1>
+
+      <p class="message-title">TYPE YOUR MESSAGE</p>
+
+      <div class="message">
+        <textarea id="message-text" aria-label="Your message"></textarea>
+        <div class="resize-handle" id="resize-handle"></div>
+      </div>
+
+      <div class="submit-area">
+        <div class="corners corners-1">
+          <button class="button button-submit" id="send-btn" type="button">SUBMIT</button>
+        </div>
+        <p class="password-error" id="send-status" role="alert"></p>
+      </div>
+
+    </div>
+
+    <a href="index.html"><p class="sub-title leave-message">ENTER BY USING PASSWORD</p></a>
+  </main>
+
+  <div class="footer">
+    <div class="footer-line"></div>
+
+    <a href="#"><img src="../Content/Images/logo_text.PNG" class="footer-logo"></a>
+
+    <p class="sub-title footer-title">Stop talking about growth. Start achieving it with Bone<span class="red-text">Team</span>.</p>
+
+    <div class="footer-columns">
+
+      <div class="footer-column footer-colum-2">
+        <p class="footer-column-main-text">SOCIALS</p>
+
+        <a href="https://www.tiktok.com/@bonedit?_r=1&_t=ZG-97eIQL7Po7V" class="footer-column-text">Tiktok</a>
+        <a href="https://www.instagram.com/boned1t?igsh=MTZnMHZjM2didXhkYw%3D%3D&utm_source=qr" class="footer-column-text">Instagram</a>
+        <a href="https://youtube.com/@boned1t?si=JRtC7zizgB8TBzTt" class="footer-column-text">Youtube</a>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  // При обновлении и возврате кнопкой «назад» страница открывается с самого начала
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  window.addEventListener('pageshow', () => window.scrollTo(0, 0));
+
+  const ta = document.getElementById('message-text');
+  const handle = document.getElementById('resize-handle');
+
+  // Само растёт вниз, когда текста много (обратно не уменьшается, чтобы не сбивать размер, выбранный руками)
+  function autoGrow() {
+    const borders = ta.offsetHeight - ta.clientHeight;
+    const need = ta.scrollHeight + borders;
+    if (need > ta.offsetHeight) ta.style.height = need + 'px';
+  }
+  ta.addEventListener('input', autoGrow);
+  window.addEventListener('load', autoGrow);
+  window.addEventListener('pageshow', autoGrow);
+
+  // Растягивание за правый нижний уголок (мышь и палец)
+  let startY = 0, startH = 0;
+  handle.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    handle.setPointerCapture(e.pointerId);
+    handle.classList.add('dragging');
+    startY = e.clientY;
+    startH = ta.offsetHeight;
+  });
+  handle.addEventListener('pointermove', (e) => {
+    if (!handle.classList.contains('dragging')) return;
+    const minH = parseFloat(getComputedStyle(ta).minHeight) || 0;
+    ta.style.height = Math.max(minH, startH + (e.clientY - startY)) + 'px';
+  });
+  const stopDrag = (e) => {
+    handle.classList.remove('dragging');
+    if (handle.hasPointerCapture(e.pointerId)) handle.releasePointerCapture(e.pointerId);
+  };
+  handle.addEventListener('pointerup', stopDrag);
+  handle.addEventListener('pointercancel', stopDrag);
+
+  // ===== Отправка сообщения на почту через FormSubmit.co (бесплатно, без регистрации) =====
+  // Впишите свою почту. Сообщения будут приходить на неё.
+  // (после первой отправки FormSubmit пришлёт письмо с подтверждением: нажмите в нём кнопку активации)
+  const RECIPIENT = 'ceo@bone.marketing';
+
+  const sendBtn = document.getElementById('send-btn');
+  const sendStatus = document.getElementById('send-status');
+  let isSending = false;
+
+  function showStatus(text, isError) {
+    sendStatus.textContent = text;
+    sendStatus.style.color = isError ? '#ff0000' : '#ffffff';
+    sendStatus.classList.add('visible');
+  }
+
+  sendBtn.addEventListener('click', async () => {
+    if (isSending) return;
+
+    const text = ta.value.trim();
+    if (!text) {
+      showStatus('Please type a message.', true);
+      return;
+    }
+
+    isSending = true;
+    sendBtn.disabled = true;
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/' + RECIPIENT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          _subject: 'New message from BoneMarketing site'
+        })
+      });
+      const result = await res.json();
+      if (!res.ok || String(result.success) !== 'true') throw new Error(result.message || 'Send failed');
+
+      ta.value = '';
+      showStatus('Message sent.', false);
+    } catch (err) {
+      console.error(err);
+      showStatus('Something went wrong, try again.', true);
+    }
+    isSending = false;
+    sendBtn.disabled = false;
+  });
+
+  // при наборе текста убираем прошлое сообщение о статусе
+  ta.addEventListener('input', () => sendStatus.classList.remove('visible'));
+</script>
+
+
+  <!-- Фон: расставляет графитовые круги по всей высоте страницы -->
+  <script>
+    (function () {
+      var box = document.querySelector('.bg-glow-container');
+      if (!box) return;
+
+      function buildGlow() {
+        var pageH = document.body.offsetHeight;
+        var step = Math.max(window.innerHeight * 0.9, 700);
+        box.innerHTML = '';
+
+        for (var i = 0, top = -250; top < pageH; i++, top += step) {
+          var size = 900 + (i % 3) * 100;
+          var shift = -350 - (i % 3) * 50;
+          var c = document.createElement('div');
+          c.className = 'glow-circle';
+          c.style.top = top + 'px';
+          c.style.width = c.style.height = size + 'px';
+          c.style.opacity = (0.6 - (i % 3) * 0.05).toFixed(2);
+          c.style[i % 2 === 0 ? 'left' : 'right'] = shift + 'px';
+          box.appendChild(c);
+        }
+      }
+
+      var timer;
+      function rebuild() { clearTimeout(timer); timer = setTimeout(buildGlow, 150); }
+
+      buildGlow();
+      window.addEventListener('load', buildGlow);
+      window.addEventListener('resize', rebuild);
+      if (window.ResizeObserver) new ResizeObserver(rebuild).observe(document.body);
+    })();
+  </script>
+
+</body>
+</html>

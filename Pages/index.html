@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BoneMarketing - CUSTOM MUSIC MARKETING</title>
+  <link rel="icon" type="image/png" href="../Content/Images/logo.png">
+
+  <link rel="stylesheet" href="../Styles/style_password,message.css">
+  <script src="../script.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Фон: графитовые круги -->
+  <div class="bg-glow-container">
+    <div class="glow-circle circle-1"></div>
+    <div class="glow-circle circle-2"></div>
+    <div class="glow-circle circle-3"></div>
+  </div>
+
+
+  <nav class="navbar">
+    <div class="navbar-container">
+
+      <a href="#"><img src="../Content/Images/logo_text.PNG" class="logo"></a>
+
+    </div>
+  </nav>
+
+  <main class="hero">
+    <div class="hero-center">
+
+      <div class="hero-top">
+        <h1 class="main-title">OPENING SOON</h1>
+
+        <p class="password-title">ENTER PASSWORD</p>
+      </div>
+
+      <div class="password" id="password">
+        <div class="password-box"><span class="digit"></span></div>
+        <div class="password-box"><span class="digit"></span></div>
+        <div class="password-box"><span class="digit"></span></div>
+        <div class="password-box"><span class="digit"></span></div>
+        <div class="password-box"><span class="digit"></span></div>
+        <div class="password-box"><span class="digit"></span></div>
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" class="code-input" id="code" aria-label="Password">
+      </div>
+
+      <div class="submit-area">
+        <div class="corners corners-1">
+          <button class="button button-submit" type="button">SUBMIT</button>
+        </div>
+        <p class="password-error" id="password-error" role="alert"></p>
+      </div>
+
+    </div>
+
+    <a href="message.html"><p class="sub-title leave-message">LEAVE YOUR MESSAGE</p></a>
+  </main>
+
+  <div class="footer">
+    <div class="footer-line"></div>
+
+    <a href="#"><img src="../Content/Images/logo_text.PNG" class="footer-logo"></a>
+
+    <p class="sub-title footer-title">Stop talking about growth. Start achieving it with Bone<span class="red-text">Team</span>.</p>
+
+    <div class="footer-columns">
+
+      <div class="footer-column footer-colum-2">
+        <p class="footer-column-main-text">SOCIALS</p>
+
+        <a href="https://www.tiktok.com/@bonedit?_r=1&_t=ZG-97eIQL7Po7V" class="footer-column-text">Tiktok</a>
+        <a href="https://www.instagram.com/boned1t?igsh=MTZnMHZjM2didXhkYw%3D%3D&utm_source=qr" class="footer-column-text">Instagram</a>
+        <a href="https://youtube.com/@boned1t?si=JRtC7zizgB8TBzTt" class="footer-column-text">Youtube</a>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  // При обновлении страница всегда открывается с самого начала
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  const code = document.getElementById('code');
+  const wrap = document.getElementById('password');
+  const boxes = wrap.querySelectorAll('.password-box');
+  const digits = wrap.querySelectorAll('.digit');
+  const LEN = boxes.length;
+  let isChecking = false;
+
+  const CORRECT_HASH = "3ef122b2fbeefefd4bc645e1959e3070ec5b725c3e992d05101e9de9077062ec";
+
+  // SHA-256: системная версия (HTTPS / localhost) или запасная (обычный HTTP по IP, например тест с телефона)
+  async function sha256(string) {
+    if (window.crypto && window.crypto.subtle) {
+      const utf8 = new TextEncoder().encode(string);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    return sha256Fallback(string);
+  }
+
+  // Чистый JS SHA-256 (для ASCII; пароль из цифр)
+  function sha256Fallback(ascii) {
+    function rightRotate(v, a) { return (v >>> a) | (v << (32 - a)); }
+    var maxWord = Math.pow(2, 32), result = '', words = [], i, j;
+    var asciiBitLength = ascii.length * 8;
+    var hash = [], k = [], primeCounter = 0, isComposite = {};
+    for (var candidate = 2; primeCounter < 64; candidate++) {
+      if (!isComposite[candidate]) {
+        for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+        hash[primeCounter] = (Math.pow(candidate, .5) * maxWord) | 0;
+        k[primeCounter++] = (Math.pow(candidate, 1 / 3) * maxWord) | 0;
+      }
+    }
+    ascii += '\x80';
+    while (ascii.length % 64 - 56) ascii += '\x00';
+    for (i = 0; i < ascii.length; i++) {
+      j = ascii.charCodeAt(i);
+      if (j >> 8) return '';
+      words[i >> 2] |= j << ((3 - i) % 4) * 8;
+    }
+    words[words.length] = ((asciiBitLength / maxWord) | 0);
+    words[words.length] = asciiBitLength;
+    for (j = 0; j < words.length;) {
+      var w = words.slice(j, j += 16), oldHash = hash;
+      hash = hash.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2], a = hash[0], e = hash[4];
+        var temp1 = hash[7]
+          + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+          + ((e & hash[5]) ^ (~e & hash[6]))
+          + k[i]
+          + (w[i] = (i < 16) ? w[i] : (
+              w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+            ) | 0);
+        var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+          + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(temp1 + temp2) | 0].concat(hash);
+        hash[4] = (hash[4] + temp1) | 0;
+      }
+      for (i = 0; i < 8; i++) hash[i] = (hash[i] + oldHash[i]) | 0;
+    }
+    for (i = 0; i < 8; i++) for (j = 3; j + 1; j--) {
+      var b = (hash[i] >> (j * 8)) & 255;
+      result += (b < 16 ? 0 : '') + b.toString(16);
+    }
+    return result;
+  }
+
+  const errorBox = document.getElementById('password-error');
+  function showError() {
+    errorBox.textContent = 'Incorrect password, try again.';
+    errorBox.classList.add('visible');
+  }
+  function hideError() {
+    errorBox.classList.remove('visible');
+  }
+
+  // Рисуем введённые цифры по ячейкам
+  function render() {
+    const v = code.value;
+    const active = Math.min(v.length, LEN - 1);
+    boxes.forEach((box, i) => {
+      digits[i].textContent = v[i] || '';
+      box.classList.toggle('active', i === active);
+      box.classList.toggle('empty', !v[i]);
+    });
+  }
+
+  // Проверка пароля: только по Enter или по кнопке SUBMIT
+  async function checkPassword() {
+    if (isChecking) return;
+    const password = code.value;
+
+    // не все 6 цифр введены — тоже неверный пароль
+    if (password.length < LEN) {
+      showError();
+      return;
+    }
+
+    isChecking = true;
+    try {
+      const inputHash = await sha256(password);
+
+      if (inputHash === CORRECT_HASH) {
+        window.location.href = 'index_' + CORRECT_HASH + '.html';
+        return;
+      }
+      showError();
+      code.value = '';
+      render();
+      code.focus();
+    } catch (err) {
+      console.error(err);
+    }
+    isChecking = false;
+  }
+
+  code.addEventListener('input', () => {
+    // трогаем value только если там есть лишние символы
+    if (/[^0-9]/.test(code.value)) {
+      code.value = code.value.replace(/[^0-9]/g, '');
+    }
+    hideError();
+    render();
+  });
+
+  code.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      checkPassword();
+    }
+  });
+
+  // каретка всегда в конце, чтобы нельзя было вставить цифру «посередине»
+  function caretToEnd() {
+    const n = code.value.length;
+    try { code.setSelectionRange(n, n); } catch (e) {}
+  }
+  code.addEventListener('focus', () => { wrap.classList.add('focused'); caretToEnd(); });
+  code.addEventListener('blur', () => wrap.classList.remove('focused'));
+  code.addEventListener('select', caretToEnd);
+  code.addEventListener('click', caretToEnd);
+
+  document.querySelector('.button-submit').addEventListener('click', checkPassword);
+
+  // Возврат на страницу кнопкой «назад» (браузер восстанавливает её из кэша)
+  window.addEventListener('pageshow', () => {
+    window.scrollTo(0, 0);
+    isChecking = false;
+    code.value = '';
+    hideError();
+    render();
+  });
+
+  render();
+  // на компьютере сразу ставим курсор в поле; на телефоне не открываем клавиатуру сама
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) code.focus();
+</script>
+
+
+  <!-- Фон: расставляет графитовые круги по всей высоте страницы -->
+  <script>
+    (function () {
+      var box = document.querySelector('.bg-glow-container');
+      if (!box) return;
+
+      function buildGlow() {
+        var pageH = document.body.offsetHeight;
+        var step = Math.max(window.innerHeight * 0.9, 700);
+        box.innerHTML = '';
+
+        for (var i = 0, top = -250; top < pageH; i++, top += step) {
+          var size = 900 + (i % 3) * 100;
+          var shift = -350 - (i % 3) * 50;
+          var c = document.createElement('div');
+          c.className = 'glow-circle';
+          c.style.top = top + 'px';
+          c.style.width = c.style.height = size + 'px';
+          c.style.opacity = (0.6 - (i % 3) * 0.05).toFixed(2);
+          c.style[i % 2 === 0 ? 'left' : 'right'] = shift + 'px';
+          box.appendChild(c);
+        }
+      }
+
+      var timer;
+      function rebuild() { clearTimeout(timer); timer = setTimeout(buildGlow, 150); }
+
+      buildGlow();
+      window.addEventListener('load', buildGlow);
+      window.addEventListener('resize', rebuild);
+      if (window.ResizeObserver) new ResizeObserver(rebuild).observe(document.body);
+    })();
+  </script>
+
+</body>
+</html>

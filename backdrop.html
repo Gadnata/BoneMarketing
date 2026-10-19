@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Плавный черно-серый фон без бандинга</title>
+    <style>
+        /* Базовые настройки страницы */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #080808; /* Глубокий черный фон как на скрине */
+            color: #ffffff;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 250vh; /* Длинный сайт для теста скролла */
+            overflow-x: hidden; /* Прячет вылезающие за край части кругов */
+            position: relative;
+        }
+
+        /* МИКРО-ШУМ: Оставляем, он незаметно «сшивает» пиксели и убирает полосы */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://w3.org id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02; 
+            z-index: 2; 
+            pointer-events: none;
+        }
+
+        /* Контейнер для кругов (листается вместе со страницей) */
+        .bg-glow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100%; 
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden; /* Обрезает круги, которые выходят за края */
+        }
+
+        /* КРУГИ: Глубокий графитовый цвет + экстремальный blur полностью убирают полосы */
+        .glow-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(180px); /* Максимально мягкое размытие */
+            background-color: #141416; /* Очень темный серый цвет без цветных оттенков */
+            will-change: transform;
+        }
+
+        /* КРУГ 1: Вверху слева. Заходит за левый и верхний края */
+        .circle-1 {
+            top: -250px;
+            left: -350px; 
+            width: 900px;
+            height: 900px;
+            opacity: 0.6; /* Чуть выше прозрачность, так как цвет сам по себе очень темный */
+        }
+
+        /* КРУГ 2: Ниже по странице, справа. Заходит за правый край */
+        .circle-2 {
+            top: 85vh; /* Отодвинут на приличное расстояние вниз */
+            right: -450px; /* Сильно заходит за правый бок (наполовину скрыт) */
+            width: 1100px;
+            height: 1100px;
+            opacity: 0.55;
+        }
+
+        /* КРУГ 3: Еще ниже, снова слева. Исключает любое пересечение */
+        .circle-3 {
+            top: 175vh; /* Опущен в самую нижнюю часть сайта */
+            left: -400px; /* Заходит за левый бок */
+            width: 1050px;
+            height: 1050px;
+            opacity: 0.5;
+        }
+
+        /* Стили контента */
+        .content-wrapper {
+            position: relative;
+            z-index: 3; 
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 120px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 400px; 
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.15rem;
+            color: #8a8a8a;
+            line-height: 1.7;
+            margin-bottom: 45px;
+            max-width: 650px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            background: transparent;
+            color: white;
+            border: 1px solid #2a2a2a;
+            padding: 14px 35px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            border-color: #ffffff;
+            background: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Задний фон: Строгие монохромные круги, разнесенные по углам -->
+    <div class="bg-glow-container">
+        <div class="glow-circle circle-1"></div>
+        <div class="glow-circle circle-2"></div>
+        <div class="glow-circle circle-3"></div>
+    </div>
+
+    <!-- Передний план: Контент -->
+    <div class="content-wrapper">
+        
+        <div class="section">
+            <h1>WHY SERIOUS INFLUENCERS<br>CHOOSE US</h1>
+            <p>BUILD TO PERFORM, DELIVERED TO IMPRESS, TRUSTED TO DELIVER RESULTS.</p>
+            <div class="btn-group">
+                <button class="btn">START PROJECT</button>
+                <button class="btn">RECENT WORKS →</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h1>БЕЗ ЦВЕТА И ЛИНИЙ</h1>
+            <p>Теперь круги имеют чисто графитовый оттенок. За счет минимального контраста с фоном и мягкого размытия переходы стали абсолютно невидимыми, а эффект объемной глубины остался.</p>
+        </div>
+
+        <div class="section">
+            <h1>РАССТОЯНИЕ И ЗАХОД ЗА КРАЯ</h1>
+            <p>Круги разнесены по разным углам страницы (лево, право, лево) и не пересекаются друг с другом. Благодаря отрицательным отступам (`left: -350px`), они плавно вылезают из-за границ монитора ровно наполовину.</p>
+            <div class="btn-group">
+                <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">НАВЕРХ ↑</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

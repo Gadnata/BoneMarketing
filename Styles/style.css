@@ -1,0 +1,1561 @@
+/* ==========================================================================
+   ПОДКЛЮЧЕНИЕ ШРИФТА CHAKRA PETCH
+   ========================================================================== */
+
+/* Light (300) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   ПОДКЛЮЧЕНИЕ ШРИФТА GEIST MONO
+   ========================================================================== */
+
+/* Thin (100) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraLight (200) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light (300) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraBold (800) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Black (900) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Основные теги сайта
+   ========================================================================== */
+
+html, body {
+  margin: 0;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+  }
+
+html {
+  background: black;
+  overflow-y: scroll;
+}
+
+body::before {
+  content: "";
+  background-image: url("../Content/Images/PC Design example.jpg"); 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%; 
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: top center;
+  opacity: 0; 
+  z-index: 999999; 
+  pointer-events: none; 
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.navbar-menu a, .footer-columns a {
+  background:
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 100% 100%,
+    linear-gradient(currentColor 0 0) 100% 100%;
+  background-size: var(--d, 0) 1px, 1px var(--d, 0);
+  background-repeat: no-repeat;
+  transition: 0.5s;
+  padding: 5px 10px;
+}
+.navbar-menu a:hover, .footer-columns a:hover {
+  --d: 8px;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Навбар
+   ========================================================================== */
+
+.navbar {
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(5px); /* Для Safari */
+  backdrop-filter: blur(5px);         /* Для остальных */
+  border-bottom: 1px solid rgba(50, 50, 50);
+  z-index: 999;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.navbar-menu {
+  display: flex;
+  text-align: center;
+  gap: 2rem;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu a {
+  font-family: 'Geist Mono', monospace;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+
+.button-contact-today {
+  background-color: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgb(70, 70, 70);
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.button-contact-today:hover {
+  transform: scale(110%);
+  background-color: rgba(255, 255, 255);
+  color: black;
+}
+
+/* Ограничиваем размер картинки логотипа */
+.logo {
+  height: 50px;            /* Задает аккуратную высоту под ваш навбар (высота навбара 100px) */
+  width: auto;             /* Пропорции ширины сохранятся автоматически */
+  display: block;          /* Убирает лишние скрытые отступы снизу картинки */
+  object-fit: contain;     /* Защищает картинку от деформации и растягивания */
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Скролл видео
+   ========================================================================== */
+
+.vid {
+  height: 3000px;
+}
+
+.holder {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  isolation: isolate;   /* свой слой, чтобы z-index: -1 не ушёл под фон страницы */
+}
+
+.video-scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 108%;
+  object-fit: cover;
+  z-index: -1;          /* картинка под текстом */
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+
+/* Фоновое scroll-видео (покадровая анимация) */
+#video-frame {
+  z-index: -2;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Остальная часть главной страницы
+   ========================================================================== */
+
+.box-round-1 {
+  /* 1. ВКЛЮЧАЕМ ПОЗИЦИОНИРОВАНИЕ (Без этого top не работает!) */
+  position: absolute;
+  
+  /* 2. ВЫРАВНИВАНИЕ ПО ЦЕНТРУ ЭКРАНА */
+  left: 50% ;
+  transform: translateX(-50%) !important;
+
+  /* 3. УПРАВЛЕНИЕ ВЫСОТОЙ (МЕНЯЙТЕ ЭТО ЧИСЛО ДЛЯ СДВИГА) */
+  /* Поставьте 350px, 400px или 500px — теперь оно ОБЯЗАНО отреагировать */
+  top: 225px; 
+  width: 190px !important;
+  height: 35px !important;
+
+  /* 5. ВНЕШНИЙ ВИД (Прозрачный фон, белая обводка и скругление) */
+  background-color: transparent;
+  border: 1px solid #ffffff; 
+  border-radius: 9999px;
+
+  /* 6. ВЫРАВНИВАНИЕ ТЕКСТА ВНУТРИ КАПСУЛЫ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.box-round-point-1 {
+  width: 7px;
+  height: 7px;
+  background-color: rgba(255, 0, 0); /* Цвет центральной точки */
+  border-radius: 999px;
+  border: 3.5px solid rgb(180, 0, 0); 
+}
+
+.box-round-text-1 {
+  font-family: 'Chakra Petch', sans-serif;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 14px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-title {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 52px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  margin: 0px;
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-title-1 {
+  padding-top: 290px;
+}
+
+.sub-title {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sub-title-1 {
+  margin: 0px auto;
+  padding-top: 25px;
+}
+
+/* 🌟 Красим только слово TEAM в красный цвет */
+.red-text {
+  color: #ff0000; /* Яркий красный цвет (при необходимости замените на точный HEX из Фотошопа) */
+}
+
+.buttons-2-main {
+  margin: 35px auto auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button {
+  width: 190px;
+  height: 45px; 
+  box-sizing: border-box;
+  background-color: rgb(11, 11, 11);
+  border: 1px solid rgba(77, 77, 77); /* Серая рамка теперь полностью видна */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px;
+  cursor: pointer;
+  padding: 0; 
+
+  display: flex;
+  align-items: center;    
+  justify-content: center; 
+  gap: 4px;               
+  line-height: 1;         
+  white-space: nowrap; 
+  
+  font-size: 16px;
+  font-weight: 500; 
+  text-align: center; 
+  
+  color: rgba(204, 204, 204); 
+  text-transform: uppercase; 
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Поднимаем кнопку, чтобы клик работал без проблем */
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.buttons-2-main a {
+  text-decoration: none;
+}
+
+.button-contact {
+  color: rgba(255, 255, 255); 
+}
+
+.button img {
+  width: 20px; 
+  transform: translateX(-5px); 
+}
+
+.button-whatsapp {
+  border: 1px solid rgba(50, 217, 81); 
+  transition: 0.5s;
+}
+
+.button-whatsapp:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgba(50, 217, 81);
+  transform: scale(110%);
+}
+
+/* 🌟 КОНТЕЙНЕР ДЛЯ КНОПКИ (ВАШ КЛАСС) */
+.corners {
+  width: 190px;
+  height: 45px; 
+  box-sizing: border-box;
+  position: relative; /* Создаем контекст для наложения уголков сверху */
+  transition: 0.5s;
+}
+
+/* 🌟 ТОЛСТЫЕ БЕЛЫЕ УГОЛКИ ПОВЕРХ КНОПКИ */
+.corners::before {
+  content: "";
+  /* Настройка длины уголков */
+  --corner-size: 12px; 
+
+  /* Идеально растягиваем поверх серой рамки кнопки */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  
+  /* Белая рамка делается толщиной 3px */
+  border: 2px solid rgb(255, 255, 255); 
+  z-index: 2; /* Ложится поверх кнопки */
+  pointer-events: none; /* Клик проходит сквозь уголки */
+
+  /* 🌟 ВАШ ТОЧНЫЙ CLIP-PATH БЕЗ THICKNESS */
+  clip-path: polygon(
+    0% 0%, 
+    var(--corner-size) 0%, 
+    var(--corner-size) 3px, 
+    calc(100% - var(--corner-size)) 3px, 
+    calc(100% - var(--corner-size)) 0%, 
+    100% 0%, 
+    
+    100% var(--corner-size), 
+    calc(100% - 3px) var(--corner-size), 
+    calc(100% - 3px) calc(100% - var(--corner-size)), 
+    100% calc(100% - var(--corner-size)), 
+    100% 100%, 
+    
+    calc(100% - var(--corner-size)) 100%, 
+    calc(100% - var(--corner-size)) calc(100% - 3px), 
+    var(--corner-size) calc(100% - 3px), 
+    var(--corner-size) 100%, 
+    0% 100%, 
+    
+    0% calc(100% - var(--corner-size)), 
+    3px calc(100% - var(--corner-size)), 
+    3px var(--corner-size), 
+    0% var(--corner-size)
+  );
+  transition: 0.5s;
+}
+
+.corners-1:hover {
+  transform: scale(110%); 
+}
+
+.corners-1:hover::before {
+  --corner-size: 16px;
+}
+
+.box {
+  /* 🌟 Задаем точные размеры */
+  width: 1360px;
+  height: 460px;
+  max-width: 100%; /* Защита: прямоугольник не выйдет за правый край экрана */
+  
+  /* 🌟 Серая обводка толщиной 1 пиксель (можно сделать толще, например 2px) */
+  border: 2px solid rgba(26, 26, 26);
+  box-sizing: border-box; 
+  
+  /* 🌟 Пустая (прозрачная) заливка */
+  background: transparent; 
+  
+  /* 210 1340 Центрируем блок на странице и добавляем отступы сверху/снизу */
+  margin: 210px auto; 
+  
+  /* Включаем правильный расчет размеров, чтобы обводка не увеличивала блок */
+  position: sticky;
+}
+
+.box video {
+  width: 100%;
+  height: 100%;
+  /* Картинка заполнит весь прямоугольник и не сожмется, лишнее аккуратно обрежется */
+  object-fit: cover; 
+  object-position: center; 
+  /* Центрирует изображение внутри рамки */
+  /* Чем больше второе число, тем ниже опускается картинка */
+}
+
+.box img {
+  width: 100%;
+  height: 100%;
+  /* Картинка заполнит весь прямоугольник и не сожмется, лишнее аккуратно обрежется */
+  object-fit: cover; 
+  object-position: center; 
+  /* Центрирует изображение внутри рамки */
+  /* Чем больше второе число, тем ниже опускается картинка */
+}
+
+.outline {
+  /* 🌟 ОДНО ЗНАЧЕНИЕ ДЛЯ НАСТРОЙКИ УГОЛКОВ (меняйте только его) */
+  --corner-size: 8px; 
+
+  scroll-margin-top: 120px;
+
+  margin: 495px auto 10px;
+  width: 155px;
+  height: 25px; 
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50); 
+
+  /* 🌟 Автоматический расчет маски через переменную */
+  clip-path: polygon(
+    0% 0%, 
+    var(--corner-size) 0%, 
+    var(--corner-size) 2px, 
+    calc(100% - var(--corner-size)) 2px, 
+    calc(100% - var(--corner-size)) 0%, 
+    100% 0%, 
+    
+    100% var(--corner-size), 
+    calc(100% - 2px) var(--corner-size), 
+    calc(100% - 2px) calc(100% - var(--corner-size)), 
+    100% calc(100% - var(--corner-size)), 
+    100% 100%, 
+    
+    calc(100% - var(--corner-size)) 100%, 
+    calc(100% - var(--corner-size)) calc(100% - 2px), 
+    var(--corner-size) calc(100% - 2px), 
+    var(--corner-size) 100%, 
+    0% 100%, 
+    
+    0% calc(100% - var(--corner-size)), 
+    2px calc(100% - var(--corner-size)), 
+    2px var(--corner-size), 
+    0% var(--corner-size)
+  );
+
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+}
+
+.outline p {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.3;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 15px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(102, 102, 102); /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-title-2 {
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 32px;
+  font-weight: 500;
+  margin: 20px;
+}
+
+.cards {
+  margin: 60px auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;  /* Элементы идут сверху вниз */
+  align-items: center;
+  width: 275px;
+  border: 1px solid rgba(38, 38, 38); 
+  background: rgba(10, 10, 10); 
+  box-sizing: border-box;
+  box-shadow: 4px 4px 0px rgb(38, 38, 38);
+}
+
+.card-type-1 {
+  height: 380px;
+}
+
+.card-type-2 {
+  height: 360px;
+}
+
+.card h1 {
+  margin: 24px;
+  text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 54px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card-image-1 {
+  width: 320px;
+  margin: -55px;
+}
+
+.card-image-2 {
+  width: 230px;
+}
+
+.card-image-3 {
+  width: 320px;
+  margin: -55px;
+}
+
+.card p {
+  margin-top: auto; 
+  /* 🌟 ТОЧНЫЙ ОТСТУП ОТ НИЗА: ровно 10px до границы */
+  margin-bottom: 5px; 
+  text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 0.8;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 24px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(77, 77, 77); /* Основной цвет заголовка */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-trusted {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin: 125px auto auto; 
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lunar-media-1 {
+  width: 160px;
+  margin: 55px auto; 
+  display: flex;
+  justify-content: center;
+}
+
+.box-round-2 {
+  width: 190px;
+  height: 35px;
+
+  /* 5. ВНЕШНИЙ ВИД (Прозрачный фон, белая обводка и скругление) */
+  background-color: transparent;
+  border: 1px solid #ffffff; 
+  box-sizing: border-box;
+  border-radius: 999px;
+  margin: 230px auto;
+
+  /* 6. ВЫРАВНИВАНИЕ ТЕКСТА ВНУТРИ КАПСУЛЫ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.box-round-point-2 {
+  width: 7px;
+  height: 7px;
+  background-color: rgba(255, 0, 0); /* Цвет центральной точки */
+  border-radius: 999px;
+  border: 3.5px solid rgb(180, 0, 0); 
+}
+
+.box-round-text-2 {
+  font-family: 'Chakra Petch', sans-serif;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 14px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-title-3 {
+  letter-spacing: -1.2px; /* Буквы станут плотнее на 1 пиксель */
+  font-size: 46px;
+  font-weight: 600;
+  margin: -200px auto;
+}
+
+.sub-title-2 {
+  margin: 220px auto;
+}
+
+.table {
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 16px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  
+  color: white; /* Основной цвет заголовка */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 95%;                  /* Таблица растягивается на всю доступную ширину */           /* Но не становится шире 800px */
+  border-collapse: collapse;    /* Объединяем двойные рамки в одну */
+  font-family: "Geist-Mono", monospace; /* В стиле ваших кнопок */
+  margin: -150px auto;            /* Отступы сверху/снизу и центрирование */
+}
+
+.table thead th {
+  font-weight: 500;
+  line-height: 3.5;
+}
+
+.table td {
+  border: 1px solid #4d4d4d;    /* Серая обводка */
+  padding: 10px 15px;           /* Внутренние отступы в ячейках */
+  text-align: left;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 50%; /* Первый столбец с длинным текстом займет половину таблицы */
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 25%; /* Столбец BONETEAM */
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 25%; /* Столбец OTHERS */
+}
+
+.mark-box {
+  width: 22.5px;
+  height: 22.5px;
+  background-color: rgb(13, 13, 13);
+  border: 1px solid rgb(77, 77, 77); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mark-box img {
+  margin: auto auto;
+  width: 11px;
+  height: 11px;
+}
+
+.corners-2 {
+  width: 24.5px;
+  height: 24.5px;
+}
+
+.corners-2::before {
+  --corner-size: 6px;
+  border: 1.5px solid rgb(255, 255, 255);
+}
+
+.buttons-2-comparison {
+  margin: 200px auto auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button-recent {
+  border: 0.5px solid rgb(77, 77, 77);
+  transition: 0.5s;
+  background-color: black;
+}
+
+.button-recent:hover {
+  transform: scale(110%);
+  background: white;
+  color: black;
+}
+
+.main-title-4 {
+  letter-spacing: -1.2px;
+  font-size: 46px;
+  font-weight: 600;
+  margin: 235px auto auto; 
+}
+
+.sub-title-3 {
+  margin: 25px auto; 
+}
+
+.plan {
+  margin: 80px auto;
+  scroll-margin-top: 120px;
+}
+
+.plan-box {
+  width: 680px;
+  height: 350px;
+  padding: 35px;
+  background-color: black;
+  border: 1px solid rgb(51, 51, 51); 
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+.plan-box-1 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_grid.png");
+  background-repeat: repeat;
+  background-size: 18px 18px; 
+  background-position: 6px 3px; 
+}
+
+.plan-box-4 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_plus.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -2px -1px;
+}
+
+.plan-box-5 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_cross.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -2px -1px;
+}
+
+.plan-box p, .plan-box h1 {
+    /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 21px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  margin: 0px;
+  
+  color: rgb(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.plan-box-top h1 {
+  color: white;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.plan-box-top p {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.plan-box-doned-task {
+  display: flex;
+  align-items: center; /* Центрирует тексты по высоте ровно по центру квадрата */
+  gap: 10px;           /* Создает красивый отступ между квадратом и текстом справа */
+  margin-top: 25px;
+}
+
+.plan-box-doned-task .mark-box img {
+  filter: brightness(0) invert(1);
+}
+
+.plan-box-doned-task p {
+  color: white;
+  font-size: 18px;
+}
+
+.step {
+  display: flex;
+  justify-content: center;
+}
+
+.plan-line {
+  width: 3px;
+  height: 35px;
+  background-color: white;
+  margin: 10px auto;
+}
+
+.corners-3 {
+  width: 680px;
+  height: 350px;
+}
+
+.corners-3::before {
+  --corner-size: 20px; 
+}
+
+.qdwjh {
+  margin: 55px auto; 
+}
+
+.main-title-5 {
+  letter-spacing: -1.2px; /* Буквы станут плотнее на 1 пиксель */
+  font-size: 46px;
+  font-weight: 600;
+  margin: -3
+  0px auto auto; 
+}
+
+.review-companies {
+  margin: 30px auto;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.review-companies img {
+  width: 55px;
+}
+
+.sub-title-4 {
+  margin: 35px auto;
+}
+
+.reviews {
+  margin: 45px auto;
+  scroll-margin-top: 120px;
+  display: grid;
+  grid-template-columns: repeat(2, 680px);
+  justify-content: center;
+}
+
+.review-box {
+  height: 345px;
+  width: 680px;
+  padding: 40px;
+  background-color: black;
+  border: 1px solid rgb(51, 51, 51); 
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+.review-author {
+  display: flex;
+  align-items: center; /* Центрирует тексты по высоте ровно по центру квадрата */
+  gap: 15px;           /* Создает красивый отступ между квадратом и текстом справа */
+}
+
+.review-text {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 14px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(255, 255, 255); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  margin: 0px 0px;
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Отступ между именем и подписью */
+}
+
+.review-logo-box {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(38, 38, 38);
+  border: 2px solid rgb(77, 77, 77); 
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-logo-box img {
+  width: 20px;
+  height: 20px;
+}
+
+.review-company {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.review-author {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(204, 204, 204);
+  margin: 0px 0px;
+}
+
+.corners-4 {
+  height: 345px;
+  width: 680px;
+}
+
+.corners-4::before {
+  --corner-size: 20px; 
+}
+
+.review-box-1 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_plus.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -2px -1px;
+}
+
+.review-box-4 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_grid.png");
+  background-repeat: repeat;
+  background-size: 18px 18px; 
+  background-position: 6px 3px; 
+}
+
+.button-more {
+  margin: 50px auto;
+}
+
+.corners-5 {
+  margin: -5px auto;
+}
+
+.corners-5:hover {
+  transform: scale(110%);
+}
+
+.corners-5:hover::before {
+  --corner-size: 16px;
+}
+
+.main-title-6 {
+  margin: 105px auto;
+  font-size: 46px;
+  font-weight: 600;
+}
+
+.sub-title-5 {
+  margin: -75px auto;
+}
+
+.questions {
+  margin: 150px auto;
+}
+
+.question {
+  width: 1360px;
+  height: 80px;
+  padding: 25px;
+  background-color: black;
+  border: 1px solid rgb(51, 51, 51); 
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  
+  display: flex;
+  justify-content: space-between; 
+  
+  /* 🌟 ИЗМЕНЕНИЕ 1: Прижимаем элементы к верхнему краю, 
+     чтобы они не падали вниз при увеличении высоты */
+  align-items: flex-start;
+  
+  /* 🌟 ИЗМЕНЕНИЕ 2: Задаем точный отступ сверху, 
+     чтобы отцентрировать элементы по вертикали внутри 80px.
+     Формула: (Высота 80px - Высота бокса 35px) / 2 = ~22px */
+  padding: 22px 25px 25px 25px; 
+  
+  /* Плавность раскрытия */
+  transition: height 0.3s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.question:hover {
+  background-color: rgb(11, 11, 11);
+}
+
+.question.open {
+  height: 160px; /* Увеличиваем высоту на 80px */
+  background-color: rgb(26, 26, 26);
+}
+
+.question-text {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 35px; 
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 16px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: white; /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  
+  margin: 0; 
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.question-answer {
+  font-size: 12px;
+  max-width: 700px;
+  line-height: 1.5;
+  margin: 18px auto;
+}
+
+.question-box {
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgb(26, 26, 26); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question-box img {
+  margin: auto auto;
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease-in-out; 
+}
+
+.question.open .question-box img {
+  transform: rotate(45deg);
+}
+
+.corners-6 {
+  width: 36.5px;
+  height: 36.5px;
+  transition: height 0.3s ease-in-out; 
+}
+
+.corners-6::before {
+  --corner-size: 10px;
+  border: 1.5px solid rgb(128, 128, 128);
+}
+
+.corners-7 {
+  width: 1360px;
+  height: auto;
+  margin: auto auto;
+}
+
+.corners-7::before {
+  --corner-size: 20px; 
+}
+
+.main-title-7 {
+  font-weight: 600;
+  letter-spacing: -1.2px;
+  font-size: 46px;
+  margin: 180px auto;
+}
+.sub-title-6 {
+  font-size: 16px;
+  margin: -155px auto;
+}
+
+.button-start-today {
+  width: 260px;
+  margin: 200px auto;
+}
+
+.corners-8 {
+  margin: auto auto;
+  width: 260px;
+}
+
+.corners-8:hover {
+  transform: scale(110%);
+}
+
+.corners-8:hover::before {
+  --corner-size: 16px;
+}
+
+/* ==========================================================================
+   Футэр
+   ========================================================================== */
+
+.footer {
+  margin: 100px auto;
+  margin-bottom: 220px;
+}
+
+.footer-line {
+  height: 1px;
+  width: 100%;
+  background-color: rgb(50, 50, 50);
+}
+
+.footer-logo {
+  height: 50px;
+  width: auto;
+  margin: 60px 40px;
+}
+
+.footer-title {
+  font-size: 14px;
+  margin: -50px -210px;
+}
+
+.footer-columns {
+  margin: 150px 40px;
+  display: flex;
+  flex-direction: row; /* Выстраивает 3 колонки в один ряд слева направо */
+  justify-content: flex-start;
+  gap: 400px; /* Фиксированное расстояние между невидимыми столбиками */
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column; /* Тексты внутри колонки идут строго сверху вниз */
+  align-items: flex-start; /* Прижимает все тексты внутри колонки к её левому краю */
+}
+
+.footer-column-main-text {
+  font-family: "Geist-Mono", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(204, 204, 204);
+  letter-spacing: 1px;
+  margin: 0; /* Сброс браузерных отступов */
+  
+  /* 🌟 ГЛАВНОЕ: Отступ снизу, чтобы отодвинуть идущие следом ссылки */
+  margin-bottom: 30px; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.footer-column-text {
+  font-family: "Geist-Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(255, 255, 255); /* Делаем ссылки чуть бледнее для иерархии */
+  line-height: 1.5;
+  text-decoration: none;
+  
+  margin: 0; /* Сброс браузерных отступов */
+  
+  /* Небольшой зазор между самими строчками-ссылками */
+  margin-bottom: 12px; 
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   ФОН: размытые графитовые круги + микро-шум (как в backdrop.html)
+   ========================================================================== */
+
+/* Контейнер лежит ЗА всем контентом (z-index: -1) и растягивается на всю высоту body */
+.bg-glow-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden; /* обрезает круги, выходящие за края, и убирает горизонтальный скролл */
+}
+
+/* Микро-шум: «сшивает» пиксели и убирает полосы (бандинг) на градиентах */
+.bg-glow-container::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+}
+
+.glow-circle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #141416;
+  filter: blur(180px);
+  will-change: transform;
+}
+
+/* Круг 1: вверху слева */
+.circle-1 {
+  top: -250px;
+  left: -350px;
+  width: 900px;
+  height: 900px;
+  opacity: 0.6;
+}
+
+/* Круг 2: ниже, справа */
+.circle-2 {
+  top: 85vh;
+  right: -450px;
+  width: 1100px;
+  height: 1100px;
+  opacity: 0.55;
+}
+
+/* Круг 3: ещё ниже, слева */
+.circle-3 {
+  top: 175vh;
+  left: -400px;
+  width: 1050px;
+  height: 1050px;
+  opacity: 0.5;
+}

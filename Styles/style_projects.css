@@ -1,0 +1,735 @@
+/* ==========================================================================
+   ПОДКЛЮЧЕНИЕ ШРИФТА CHAKRA PETCH
+   ========================================================================== */
+
+/* Light (300) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('../Content/Fonts/Chakra_Petch/ChakraPetch-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   ПОДКЛЮЧЕНИЕ ШРИФТА GEIST MONO
+   ========================================================================== */
+
+/* Thin (100) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraLight (200) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light (300) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraBold (800) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Black (900) */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../Content/Fonts/Geist_Mono/GeistMono-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Основные теги сайта
+   ========================================================================== */
+
+html, body {
+  margin: 0;
+  overscroll-behavior: none;
+  }
+
+html {
+  background: black;
+  overflow-y: scroll;
+}
+
+body::before {
+  content: "";
+  background-image: url("../Content/Images/PC Design example.jpg"); 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%; 
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: top center;
+  opacity: 0; 
+  z-index: 999999; 
+  pointer-events: none; 
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.navbar-menu a, .footer-columns a, .box-recent a {
+  background:
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 100% 100%,
+    linear-gradient(currentColor 0 0) 100% 100%;
+  background-size: var(--d, 0) 1px, 1px var(--d, 0);
+  background-repeat: no-repeat;
+  transition: 0.5s;
+  padding: 5px 10px;
+}
+.navbar-menu a:hover, .footer-columns a:hover, .box-recent a:hover {
+  --d: 8px;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Навбар
+   ========================================================================== */
+
+.navbar {
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(5px); /* Для Safari */
+  backdrop-filter: blur(5px);         /* Для остальных */
+  border-bottom: 1px solid rgba(50, 50, 50);
+  z-index: 999;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.navbar-menu {
+  display: flex;
+  text-align: center;
+  gap: 2rem;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu a {
+  font-family: 'Geist Mono', monospace;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+
+.button-contact-today {
+  background-color: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgb(70, 70, 70);
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.button-contact-today:hover {
+  transform: scale(110%);
+  background-color: rgba(255, 255, 255);
+  color: black;
+}
+
+/* Ограничиваем размер картинки логотипа */
+.logo {
+  height: 50px;            /* Задает аккуратную высоту под ваш навбар (высота навбара 100px) */
+  width: auto;             /* Пропорции ширины сохранятся автоматически */
+  display: block;          /* Убирает лишние скрытые отступы снизу картинки */
+  object-fit: contain;     /* Защищает картинку от деформации и растягивания */
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Остальная часть главной страницы
+   ========================================================================== */
+
+.projects {
+  display: grid;
+  /* Делим доступные 95% ширины на две колонки: 35% и 60% */
+  grid-template-columns: 30% 70% ;
+  /* Автоматически распределяем оставшиеся 5% как свободное место между ними */
+  justify-content: space-between; 
+  width: 95%;
+  margin: 0 auto; /* Центрируем саму сетку на странице */
+}
+
+.box-recent {
+  height: 140px;
+  width: 95%;
+  margin: 100px auto 0px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  display: flex;
+  align-items: center;  
+}
+
+.box-recent h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: -1.4px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 46px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  margin-left: 50px;
+  color: white; /* Основной цвет заголовка */
+  text-transform: uppercase; /* Делает все буквы заглавными */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.box-recent a {
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  text-decoration: none;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 14px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin-left: 40px;
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.project-button-box {
+  height: 600px;
+  padding: 50px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  border-right: none;
+  border-top: none;
+}
+
+.button-start {
+  width: 200px;
+  height: 35px;
+  box-sizing: border-box;
+  background-color: rgb(11, 11, 11);
+  border: 1px solid rgba(77, 77, 77); /* Серая рамка теперь полностью видна */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px;
+  cursor: pointer;
+  padding: 0; 
+
+  display: flex;
+  align-items: center;    
+  justify-content: center; 
+  gap: 4px;               
+  line-height: 1;
+  white-space: nowrap; 
+  
+  font-size: 12px;
+  font-weight: 500; 
+  text-align: center;
+  
+  color: rgba(204, 204, 204); 
+  text-transform: uppercase; 
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Поднимаем кнопку, чтобы клик работал без проблем */
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.corners {
+  width: 200px;
+  height: 35px; 
+  box-sizing: border-box;
+  position: relative;
+  transition: 0.5s;
+}
+
+/* 🌟 ТОЛСТЫЕ БЕЛЫЕ УГОЛКИ ПОВЕРХ КНОПКИ */
+.corners::before {
+  content: "";
+  /* Настройка длины уголков */
+  --corner-size: 10px; 
+
+  /* Идеально растягиваем поверх серой рамки кнопки */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  
+  /* Белая рамка делается толщиной 3px */
+  border: 2px solid rgb(255, 255, 255); 
+  z-index: 2; /* Ложится поверх кнопки */
+  pointer-events: none; /* Клик проходит сквозь уголки */
+
+  /* 🌟 ВАШ ТОЧНЫЙ CLIP-PATH БЕЗ THICKNESS */
+  clip-path: polygon(
+    0% 0%, 
+    var(--corner-size) 0%, 
+    var(--corner-size) 3px, 
+    calc(100% - var(--corner-size)) 3px, 
+    calc(100% - var(--corner-size)) 0%, 
+    100% 0%, 
+    
+    100% var(--corner-size), 
+    calc(100% - 3px) var(--corner-size), 
+    calc(100% - 3px) calc(100% - var(--corner-size)), 
+    100% calc(100% - var(--corner-size)), 
+    100% 100%, 
+    
+    calc(100% - var(--corner-size)) 100%, 
+    calc(100% - var(--corner-size)) calc(100% - 3px), 
+    var(--corner-size) calc(100% - 3px), 
+    var(--corner-size) 100%, 
+    0% 100%, 
+    
+    0% calc(100% - var(--corner-size)), 
+    3px calc(100% - var(--corner-size)), 
+    3px var(--corner-size), 
+    0% var(--corner-size)
+  );
+  transition: 0.5s;
+}
+
+.corners:hover {
+  transform: scale(110%); 
+}
+
+.corners:hover::before {
+  --corner-size: 14px;
+}
+
+.project-button-box p {
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 12px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgb(71, 71, 71); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  margin-top: 10px;
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.content-sticky {
+  overflow-y: none;
+  position: sticky;
+  top: 115px; /* Создаем контекст для наложения уголков сверху */
+}
+
+.project {
+  height: 600px;
+  padding: 50px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  border-top: none;
+}
+
+.project p {
+  margin: 0px;
+  font-family: 'Chakra Petch', sans-serif;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 30px;
+  font-weight: 700; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: left; /* Выравнивание строго по центру экрана */
+  
+  color: rgb(255, 255, 255); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.image-frame {
+  height: 400px;
+  width: 700px;
+  box-sizing: border-box;
+  border: 1px solid rgba(50, 50, 50);
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.image-frame-1 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_plus.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -3px 1px;
+}
+
+.image-frame-2 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_cross.png");
+  background-repeat: repeat;
+  background-size: 22px 22px; 
+  background-position: -3px 1px;
+}
+
+.image-frame-3 {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url("../Content/Images/pattern_grid.png");
+  background-repeat: repeat;
+  background-size: 18px 18px; 
+  background-position: 7px 1px; 
+}
+
+.image-frame iframe {
+  height: 472px;
+  width: 700px;
+  transform: scale(65%);
+}
+
+.montagem-elder iframe {
+  height: 522px;
+}
+
+.project-button-box-last {
+  border-bottom: none;
+}
+
+.project-last {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   Футэр
+   ========================================================================== */
+
+.footer {
+  margin-bottom: 300px;
+}
+
+.footer-line {
+  height: 1px;
+  width: 100%;
+  background-color: rgb(50, 50, 50);
+}
+
+.footer-logo {
+  height: 50px;
+  width: auto;
+  margin: 60px 40px;
+}
+
+.footer-title {
+  /* Имя шрифта пишем ровно так, как зарегистрировали в @font-face */
+  font-family: "Geist-Mono", monospace;
+  letter-spacing: 0px; /* Буквы станут плотнее на 1 пиксель */
+  line-height: 1.5;
+  
+  /* 🌟 Задаем точные параметры из вашей задачи */
+  font-size: 14px;
+  font-weight: 500; /* Автоматически подтянет файл ChakraPetch-Bold.ttf */
+  text-align: center; /* Выравнивание строго по центру экрана */
+  
+  color: rgba(204, 204, 204); /* Основной цвет заголовка */
+  /* Отступы: 150px сверху (чтобы не заезжал под навар), авто по бокам для центра, 40px снизу */
+  max-width: 1000px; /* Ограничение ширины для красивого переноса строк */
+  margin: -50px -210px;
+  
+  /* Сглаживание пикселей для идеальной четкости */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.red-text {
+  color: #ff0000; /* Яркий красный цвет (при необходимости замените на точный HEX из Фотошопа) */
+}
+
+.footer-columns {
+  margin: 150px 40px;
+  display: flex;
+  flex-direction: row; /* Выстраивает 3 колонки в один ряд слева направо */
+  justify-content: flex-start;
+  gap: 400px; /* Фиксированное расстояние между невидимыми столбиками */
+  background-color: black; /* Для наглядности, так как текст белый */
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column; /* Тексты внутри колонки идут строго сверху вниз */
+  align-items: flex-start; /* Прижимает все тексты внутри колонки к её левому краю */
+}
+
+.footer-column-main-text {
+  font-family: "Geist-Mono", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(204, 204, 204);
+  letter-spacing: 1px;
+  margin: 0; /* Сброс браузерных отступов */
+  
+  /* 🌟 ГЛАВНОЕ: Отступ снизу, чтобы отодвинуть идущие следом ссылки */
+  margin-bottom: 30px; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.footer-column-text {
+  font-family: "Geist-Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(255, 255, 255); /* Делаем ссылки чуть бледнее для иерархии */
+  line-height: 1.5;
+  text-decoration: none;
+  
+  margin: 0; /* Сброс браузерных отступов */
+  
+  /* Небольшой зазор между самими строчками-ссылками */
+  margin-bottom: 12px; 
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
